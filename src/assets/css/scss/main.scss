@@ -1,0 +1,197 @@
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+@import "animations";
+:root {
+  --bs-body-font-family: "Nunito", sans-serif;
+  --bs-progress-height: 0.2rem;
+  --bs-border-radius: 0.375rem;
+  --bs-border-width: 2px;
+}
+
+@import "custom_shapes";
+
+body {
+  position: relative;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0; /* top:0 right:0 bottom:0 left:0 */
+  background-image: url("../../img/background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  opacity: 0.3;
+  pointer-events: none; /* doesn't block clicks */
+  z-index: -1; /* stays behind content */
+}
+/* ---------------------------------COLORS-------------------------------------------*/
+
+.shadow-orange {
+  box-shadow: 0 1.5rem 3rem rgba(var(--bs-secondary-rgb), 0.6) !important;
+}
+
+.shadow-gray-900 {
+  box-shadow: 0 1.5rem 3rem rgba(var(--bs-gray-900-rgb), 0.6) !important;
+}
+
+.bg-black-0x241d18 {
+  background-color: rgba($bs-black-0x241d18, 1) !important;
+}
+
+.black-0x241d18 {
+  color: $bs-black-0x241d18 !important;
+}
+
+.secondary-color {
+  color: #{$secondary};
+}
+
+.btn-big {
+  --bs-btn-font-size: 4rem;
+}
+
+.btn-secondary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #{$secondary};
+  --bs-btn-border-color: #fff;
+  --bs-btn-hover-color: #{$secondary};
+  --bs-btn-hover-bg: #fff;
+  --bs-btn-hover-border-color: #{$secondary};
+  --bs-btn-focus-shadow-rgb: #{$bs-black-0x241d18-rgb};
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #{$bs-black-0x241d18};
+  --bs-btn-active-border-color: #{$secondary};
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #{$btn-disabled-bg};
+  --bs-btn-disabled-border-color: #fff;
+}
+
+/* ------------------------------------------------ SPACING ----------------------------------------------------*/
+.mt-6 {
+  margin-top: ($spacer * 6);
+}
+.mt-7 {
+  margin-top: ($spacer * 9);
+}
+.mt-8 {
+  margin-top: ($spacer * 12);
+}
+.mt-9 {
+  margin-top: ($spacer * 15);
+}
+.mb-6 {
+  margin-bottom: ($spacer * 6);
+}
+.mb-7 {
+  margin-bottom: ($spacer * 9);
+}
+.mb-8 {
+  margin-bottom: ($spacer * 12);
+}
+.mb-9 {
+  margin-bottom: ($spacer * 15);
+}
+.mb-10 {
+  margin-bottom: ($spacer * 18);
+}
+.h-0 {
+  height: 0px !important;
+}
+.h-1 {
+  height: ($spacer * 0.25);
+}
+.h-6 {
+  height: ($spacer * 6) !important;
+}
+
+/*----------------------------------------CUSTOM SIZING----------------------------*/
+.fs-0-2 {
+  font-size: calc(2rem + 2.5vw);
+}
+.fs-0-3 {
+  font-size: calc(4rem + 3.5vw);
+}
+.fs-0-4 {
+  font-size: calc(6rem + 4.5vw);
+}
+.w-18-rem {
+  width: 18rem;
+}
+
+/*---------------------------------------- FONT ICONS------------------------------*/
+.material-symbols-outlined {
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 40;
+  color: $primary;
+}
+
+.material-symbols-outlined.g-icon-1em {
+  font-size: 1rem;
+}
+.material-symbols-outlined.g-icon-2em {
+  font-size: 2rem;
+}
+.material-symbols-outlined.g-icon-3em {
+  font-size: 3rem;
+}
+.material-symbols-outlined.g-icon-4em {
+  font-size: 4rem;
+}
+.material-symbols-outlined.g-icon-6em {
+  font-size: 6rem;
+}
+.material-symbols-outlined.g-icon-7em {
+  font-size: 7rem;
+}
+
+button:hover {
+  .material-symbols-outlined.g-icon-secondary-color {
+    color: #{$secondary};
+  }
+}
+
+/*-------------------------------------------------------SELECTORS-----------------------------------------------*/
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/*---------------------------------------------------------MODAL---------------------------------------------------*/
+
+/* Mobile Styles */
+@media only screen and (max-width: 578px) {
+  .mt-sm-md-9 {
+    margin-top: ($spacer * 15);
+  }
+
+  .w-80-md {
+    width: 80% !important;
+  }
+
+  .material-symbols-outlined.g-icon-sm-4em {
+    font-size: 4rem;
+  }
+}
+
+/* Tablet Styles */
+@media only screen and (min-width: 579px) and (max-width: 992px) {
+  .mt-md-lg-9 {
+    margin-top: ($spacer * 15);
+  }
+
+  .mt-md-lg-8 {
+    margin-top: ($spacer * 12);
+  }
+}
+
+@media only screen and (min-width: 579px) and (max-width: 2048px) {
+  .w-25-lg {
+    width: 25% !important;
+  }
+}
