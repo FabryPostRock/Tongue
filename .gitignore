@@ -1,0 +1,17 @@
+Lead_TEST_MEX1.csv
+**/*.log
+**/*.pyc
+**/*.tar
+**/*.env
+**/*.csv
+**/*.txt
+**/*.xlsx
+**/*.css.map
+
+
+
+# Folders
+/_pycache__/
+**/node_modules/
+**/bootstrap/
+/.firebase/
