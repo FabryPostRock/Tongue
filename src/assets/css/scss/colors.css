@@ -1,22 +1,13 @@
-$bs-black-0x241d18: #241d18;
-$bs-black-0x241d18-rgb: 36, 29, 24;
-$primary: #f8c800;
-$secondary: #384050;
-$btn-disabled-bg: rgba(226, 106, 8, 0.6);
 :root {
   /* PRIMARY: */
   --bs-primary: #f8c800;
   --bs-primary-rgb: 248, 200, 0;
-
   /* SECONDARY: */
   --bs-secondary: #384050;
   --bs-secondary-rgb: 56, 64, 80;
-
   --bs-emphasis-color: #384050;
   --bs-emphasis-color-rgb: 56, 64, 80;
-
   --bs-gray-900-rgb: 33, 37, 41;
-
   /*WHITE*/
   --bs-body-bg: #ffffff;
-}
+}/*# sourceMappingURL=colors.css.map */
