@@ -27,6 +27,11 @@ body::before {
   pointer-events: none; /* doesn't block clicks */
   z-index: -1; /* stays behind content */
 }
+
+.text-justify {
+  text-align: justify;
+}
+
 /* ---------------------------------COLORS-------------------------------------------*/
 
 .shadow-orange {

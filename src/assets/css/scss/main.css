@@ -12057,6 +12057,10 @@ body::before {
   z-index: -1; /* stays behind content */
 }
 
+.text-justify {
+  text-align: justify;
+}
+
 /* ---------------------------------COLORS-------------------------------------------*/
 .shadow-orange {
   box-shadow: 0 1.5rem 3rem rgba(var(--bs-secondary-rgb), 0.6) !important;
