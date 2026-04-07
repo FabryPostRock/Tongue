@@ -1,4 +1,4 @@
-@import "../../node_modules/bootstrap/scss/bootstrap";
+@import "../../../../node_modules/bootstrap/scss/bootstrap";
 @import url("https://fonts.googleapis.com/css?family=Nunito");
 @import "animations";
 :root {
@@ -55,19 +55,19 @@ body::before {
 }
 
 .btn-secondary {
-  --bs-btn-color: #fff;
+  --bs-btn-color: #{$primary};
   --bs-btn-bg: #{$secondary};
-  --bs-btn-border-color: #fff;
+  --bs-btn-border-color: #{$primary};
   --bs-btn-hover-color: #{$secondary};
-  --bs-btn-hover-bg: #fff;
+  --bs-btn-hover-bg: #{$primary};
   --bs-btn-hover-border-color: #{$secondary};
   --bs-btn-focus-shadow-rgb: #{$bs-black-0x241d18-rgb};
-  --bs-btn-active-color: #fff;
+  --bs-btn-active-color: #{$primary};
   --bs-btn-active-bg: #{$bs-black-0x241d18};
   --bs-btn-active-border-color: #{$secondary};
-  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-color: #{$primary};
   --bs-btn-disabled-bg: #{$btn-disabled-bg};
-  --bs-btn-disabled-border-color: #fff;
+  --bs-btn-disabled-border-color: #{$primary};
 }
 
 /* ------------------------------------------------ SPACING ----------------------------------------------------*/
@@ -129,7 +129,7 @@ body::before {
     "wght" 400,
     "GRAD" 0,
     "opsz" 40;
-  color: $primary;
+  color: #{$secondary};
 }
 
 .material-symbols-outlined.g-icon-1em {
