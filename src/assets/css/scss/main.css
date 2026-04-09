@@ -12078,6 +12078,10 @@ body::before {
   color: #241d18 !important;
 }
 
+.primary-color {
+  color: #f8c800;
+}
+
 .secondary-color {
   color: #384050;
 }

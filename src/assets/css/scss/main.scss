@@ -50,6 +50,10 @@ body::before {
   color: $bs-black-0x241d18 !important;
 }
 
+.primary-color {
+  color: #{$primary};
+}
+
 .secondary-color {
   color: #{$secondary};
 }

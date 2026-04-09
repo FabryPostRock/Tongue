@@ -1,0 +1,38 @@
+@charset "UTF-8";
+:root {
+  /* PRIMARY: */
+  --bs-primary: #f8c800;
+  --bs-primary-rgb: 248, 200, 0;
+  /* SECONDARY: */
+  --bs-secondary: #384050;
+  --bs-secondary-rgb: 56, 64, 80;
+  --bs-emphasis-color: #384050;
+  --bs-emphasis-color-rgb: 56, 64, 80;
+  --bs-gray-900-rgb: 33, 37, 41;
+  /*WHITE*/
+  --bs-body-bg: #ffffff;
+}
+
+@keyframes cardEnlarge {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    filter: brightness(1.3);
+    opacity: 0.75;
+  }
+}
+/* classe che attiva l'ingrandimento */
+.card-enlarge {
+  animation: cardEnlarge 0.9s ease-in-out infinite;
+}
+
+/* accessibilità: rispetta chi riduce le animazioni */
+@media (prefers-reduced-motion: reduce) {
+  .card-enlarge {
+    animation: none;
+  }
+}/*# sourceMappingURL=animations.css.map */
