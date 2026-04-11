@@ -197,6 +197,14 @@ button:hover {
   }
 }
 
+@media only screen and (min-width: 0px) and (max-width: 767px) {
+  .row-md-none {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
 /* Tablet Styles */
 @media only screen and (min-width: 579px) and (max-width: 992px) {
   .mt-md-lg-9 {
