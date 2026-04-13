@@ -12011,6 +12011,32 @@ textarea.form-control-lg {
   animation: cardEnlarge 0.9s ease-in-out infinite;
 }
 
+.slide-l-h1 {
+  --start-x: -200px;
+  --mid-x: 200px;
+  animation: textSlideFromLeft 1.2s ease-in-out forwards;
+}
+
+.slide-l-h2 {
+  --start-x: 600px;
+  --mid-x: -50px;
+  animation: textSlideFromLeft 1.4s ease-in-out forwards;
+}
+
+@keyframes textSlideFromLeft {
+  0% {
+    opacity: 0;
+    transform: translate(var(--start-x, 0), 0);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(var(--mid-x), 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
 /* accessibilità: rispetta chi riduce le animazioni */
 @media (prefers-reduced-motion: reduce) {
   .card-enlarge {
