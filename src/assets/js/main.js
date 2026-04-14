@@ -1,7 +1,8 @@
 import { HackerNewsAPI } from "./hacker_news_api.js";
 
 try {
-  await HackerNewsAPI.getAllNewsIDs();
+  const res = await HackerNewsAPI.getAllNewsIDs(HackerNewsAPI.URL);
+  console.log(res.data);
 } catch (err) {
   console.error(err);
 }

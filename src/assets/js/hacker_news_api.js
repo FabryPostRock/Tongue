@@ -4,15 +4,18 @@ export class HackerNewsAPI {
   static #actualRetries = 0;
   static #response = null;
   static #error = null;
-  static async getAllNewsIDs() {
+  static URL = "https://hacker-news.firebaseio.com/v0/newstories.json";
+  static async getAllNewsIDs(url) {
     while (HackerNewsAPI.#actualRetries < HackerNewsAPI.#MAX_RETRIES) {
       try {
-        HackerNewsAPI.#response = await axios.get(
-          "https://hacker-news.firebaseio.com/v1/newstories.json",
-        );
-        console.log(HackerNewsAPI.#response.data);
+        HackerNewsAPI.#response = await axios.get(url);
         HackerNewsAPI.#actualRetries += 1;
-        break;
+        return {
+          data: HackerNewsAPI.#response?.data,
+          ok: true,
+          status: HackerNewsAPI.#response?.status,
+          error: null,
+        };
       } catch (err) {
         HackerNewsAPI.#error = err;
         HackerNewsAPI.#actualRetries += 1;
@@ -24,10 +27,22 @@ export class HackerNewsAPI {
         );
       }
     }
+    return {
+      data: null,
+      ok: false,
+      status: HackerNewsAPI.#error.response?.status,
+      error: HackerNewsAPI.#error.response?.data?.error,
+    };
   }
 
   constructor() {
     throw new Error("HackerNewsAPI cannot be instantiated.");
+  }
+
+  static reset() {
+    HackerNewsAPI.#actualRetries = 0;
+    HackerNewsAPI.#response = null;
+    HackerNewsAPI.#error = null;
   }
 
   static get MAX_RETRIES() {
