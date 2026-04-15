@@ -23,7 +23,7 @@ describe("HackerNewsAPI-Get-Ids", () => {
     const url = "https://hacker-news.firebaseio.com/v0/newstories.json";
     const res = await HackerNewsAPI.getAllNewsIDs(url);
     expect(axios.get).toHaveBeenCalledWith(url);
-    expect(HackerNewsAPI.URL_IDS).toEqual(url);
+    expect(HackerNewsAPI.itemsIds.URL).toEqual(url);
     expect(res).toEqual(result);
     //devo resettare le varibili di classe perchè il suo 'state' non si resetta con un nuovo test
     HackerNewsAPI.reset();
@@ -74,7 +74,7 @@ describe("HackerNewsAPI-Get-Ids", () => {
     axios.get.mockRejectedValue(axiosError);
     const url = "https://hacker-news.firebaseio.com/v0/newstories.json";
     const res = await HackerNewsAPI.getAllNewsIDs(url);
-    expect(axios.get).toHaveBeenCalledTimes(HackerNewsAPI.MAX_RETRIES);
+    expect(axios.get).toHaveBeenCalledTimes(HackerNewsAPI.itemsIds_MAX_RETRIES);
     expect(res.data).toBeNull();
     expect(res.ok).toBe(false);
     expect(res.status).toBeGreaterThanOrEqual(400);
