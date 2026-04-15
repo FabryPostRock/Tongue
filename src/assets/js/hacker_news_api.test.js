@@ -8,10 +8,10 @@ vi.mock("axios", () => ({
   },
 }));
 
-describe("HackerNewsAPI", () => {
+describe("HackerNewsAPI-Get-Ids", () => {
   // se stai usando la libreria 'axios' devi mockare quella, se moki 'fetch' il test fallisce.
 
-  it("Verifica url e tipo risultato della chiamata", async () => {
+  it("Verifica url e tipo risultato della chiamata in caso di api call status tra 200 e 399", async () => {
     const result = {
       data: [1, 2, 3, 4, 5],
       ok: true,
@@ -23,6 +23,7 @@ describe("HackerNewsAPI", () => {
     const url = "https://hacker-news.firebaseio.com/v0/newstories.json";
     const res = await HackerNewsAPI.getAllNewsIDs(url);
     expect(axios.get).toHaveBeenCalledWith(url);
+    expect(HackerNewsAPI.URL_IDS).toEqual(url);
     expect(res).toEqual(result);
     //devo resettare le varibili di classe perchè il suo 'state' non si resetta con un nuovo test
     HackerNewsAPI.reset();

@@ -4,7 +4,7 @@ export class HackerNewsAPI {
   static actualRetries = 0;
   static response = null;
   static error = null;
-  static URL = "https://hacker-news.firebaseio.com/v0/newstories.json";
+  static URL_IDS = "https://hacker-news.firebaseio.com/v0/newstories.json";
   static async getAllNewsIDs(url) {
     while (HackerNewsAPI.actualRetries < HackerNewsAPI.MAX_RETRIES) {
       try {
