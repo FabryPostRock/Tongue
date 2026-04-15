@@ -11,9 +11,6 @@ vi.mock("axios", () => ({
 describe("HackerNewsAPI", () => {
   // se stai usando la libreria 'axios' devi mockare quella, se moki 'fetch' il test fallisce.
 
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
   it("Verifica url e tipo risultato della chiamata", async () => {
     const result = {
       data: [1, 2, 3, 4, 5],
@@ -29,9 +26,6 @@ describe("HackerNewsAPI", () => {
     expect(res).toEqual(result);
     //devo resettare le varibili di classe perchè il suo 'state' non si resetta con un nuovo test
     HackerNewsAPI.reset();
-    afterEach(() => {
-      vi.clearAllMocks();
-    });
   });
   it("Verifica keys and values del risultato della call", async () => {
     const result = {
@@ -58,9 +52,6 @@ describe("HackerNewsAPI", () => {
     expect(res.error).toBeNull();
 
     HackerNewsAPI.reset();
-    afterEach(() => {
-      vi.clearAllMocks();
-    });
   });
 
   it("Verifica risposta in caso di errore", async () => {
@@ -88,8 +79,5 @@ describe("HackerNewsAPI", () => {
     expect(res.status).toBeGreaterThanOrEqual(400);
     expect(Object.getPrototypeOf(res.error)).toEqual(String.prototype);
     HackerNewsAPI.reset();
-  });
-  afterEach(() => {
-    vi.clearAllMocks();
   });
 });
