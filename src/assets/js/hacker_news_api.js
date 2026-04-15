@@ -51,12 +51,19 @@ export class HackerNewsAPI {
   }
 
   static async getBlockNewsDetails(id) {
-    while (HackerNewsAPI.actualRetries < HackerNewsAPI.MAX_RETRIES) {
+    while (
+      HackerNewsAPI.itemDetails.actualRetries <
+      HackerNewsAPI.itemDetails.MAX_RETRIES
+    ) {
       try {
         HackerNewsAPI.itemDetails.response = await axios.get(
           HackerNewsAPI.URL_ID_DETAILS(id),
         );
         HackerNewsAPI.itemDetails.actualRetries += 1;
+        console.log(
+          "HackerNewsAPI.itemDetails.response",
+          HackerNewsAPI.itemDetails.response,
+        );
         return {
           data: HackerNewsAPI.itemDetails.response?.data,
           ok: true,
@@ -70,10 +77,11 @@ export class HackerNewsAPI {
         console.error(
           `Status:  ${HackerNewsAPI.itemDetails.error.response?.status}\n` +
             `Body: ${HackerNewsAPI.itemDetails.error.response?.data?.error}\n` +
-            `Tentativi rimasti : ${HackerNewsAPI.MAX_RETRIES - HackerNewsAPI.itemDetails.actualRetries}`,
+            `Tentativi rimasti : ${HackerNewsAPI.itemDetails.MAX_RETRIES - HackerNewsAPI.itemDetails.actualRetries}`,
         );
       }
     }
+
     return {
       data: null,
       ok: false,
