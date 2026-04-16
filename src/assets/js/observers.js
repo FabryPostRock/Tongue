@@ -41,6 +41,28 @@ export class Observable {
   }
 }
 
-export class newsCard extends Observable {
-  constructor() {}
+export class News extends Observable {
+  constructor() {
+    super();
+    this.items = new Map();
+  }
+
+  addNews(item) {
+    if (!item || !item.id || !item.by || !item.url || !item.title) {
+      throw new TypeError("item deve avere id e by url e title");
+    }
+    const el = this.items.get(item.id);
+    if (el) {
+      throw new Error("This News already exists!");
+    } else {
+      this.items.set(item.id, {
+        id: item.id,
+        by: item.by,
+        url: item.url,
+        title: item.title,
+      });
+    }
+  }
+
+  removeNews() {}
 }
