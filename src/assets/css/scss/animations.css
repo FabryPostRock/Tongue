@@ -3,6 +3,7 @@
   /* PRIMARY: */
   --bs-primary: #f8c800;
   --bs-primary-rgb: 248, 200, 0;
+  --bs-border-color-translucent: #f8c800;
   /* SECONDARY: */
   --bs-secondary: #384050;
   --bs-secondary-rgb: 56, 64, 80;

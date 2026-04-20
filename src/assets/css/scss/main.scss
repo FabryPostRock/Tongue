@@ -1,14 +1,14 @@
-@import "../../../../node_modules/bootstrap/scss/bootstrap";
-@import url("https://fonts.googleapis.com/css?family=Nunito");
-@import "animations";
+@import '../../../../node_modules/bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import 'animations';
 :root {
-  --bs-body-font-family: "Nunito", sans-serif;
+  --bs-body-font-family: 'Nunito', sans-serif;
   --bs-progress-height: 0.2rem;
   --bs-border-radius: 0.375rem;
   --bs-border-width: 2px;
 }
 
-@import "custom_shapes";
+@import 'custom_shapes';
 
 body {
   position: relative;
@@ -16,7 +16,7 @@ body {
 }
 
 body::before {
-  content: "";
+  content: '';
   position: fixed;
   inset: 0; /* top:0 right:0 bottom:0 left:0 */
   background-size: cover;
@@ -63,10 +63,10 @@ body::before {
 }
 
 .btn-secondary {
-  --bs-btn-color: #{$primary};
+  --bs-btn-color: #ffffff;
   --bs-btn-bg: #{$secondary};
   --bs-btn-border-color: #{$primary};
-  --bs-btn-hover-color: #{$secondary};
+  --bs-btn-hover-color: #ffffff;
   --bs-btn-hover-bg: #{$primary};
   --bs-btn-hover-border-color: #{$secondary};
   --bs-btn-focus-shadow-rgb: #{$bs-black-0x241d18-rgb};
@@ -83,12 +83,17 @@ body::before {
 }
 
 footer a:hover,
-footer a:focus {
+footer a:focus,
+.card .card-body .card-link a:hover,
+.card .card-body .card-link a:focus {
   color: var(--bs-primary) !important;
   text-decoration-color: var(--bs-primary) !important;
 }
 
 /* ------------------------------------------------ SPACING ----------------------------------------------------*/
+.mt-0-1 {
+  margin-top: ($spacer * 0.1);
+}
 .mt-6 {
   margin-top: ($spacer * 6);
 }
@@ -116,6 +121,9 @@ footer a:focus {
 .mb-10 {
   margin-bottom: ($spacer * 18);
 }
+.ms-neg-075 {
+  margin-left: -($spacer * 0.75);
+}
 .h-0 {
   height: 0px !important;
 }
@@ -136,17 +144,17 @@ footer a:focus {
 .fs-0-4 {
   font-size: calc(6rem + 4.5vw);
 }
-.w-18-rem {
-  width: 18rem;
+.w-max-18-rem {
+  max-width: 18rem;
 }
 
 /*---------------------------------------- FONT ICONS------------------------------*/
 .material-symbols-outlined {
   font-variation-settings:
-    "FILL" 0,
-    "wght" 400,
-    "GRAD" 0,
-    "opsz" 40;
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 40;
   color: #{$secondary};
 }
 

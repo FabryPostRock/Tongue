@@ -11984,6 +11984,7 @@ textarea.form-control-lg {
   /* PRIMARY: */
   --bs-primary: #f8c800;
   --bs-primary-rgb: 248, 200, 0;
+  --bs-border-color-translucent: #f8c800;
   /* SECONDARY: */
   --bs-secondary: #384050;
   --bs-secondary-rgb: 56, 64, 80;
@@ -12044,7 +12045,7 @@ textarea.form-control-lg {
   }
 }
 :root {
-  --bs-body-font-family: "Nunito", sans-serif;
+  --bs-body-font-family: 'Nunito', sans-serif;
   --bs-progress-height: 0.2rem;
   --bs-border-radius: 0.375rem;
   --bs-border-width: 2px;
@@ -12054,6 +12055,7 @@ textarea.form-control-lg {
   /* PRIMARY: */
   --bs-primary: #f8c800;
   --bs-primary-rgb: 248, 200, 0;
+  --bs-border-color-translucent: #f8c800;
   /* SECONDARY: */
   --bs-secondary: #384050;
   --bs-secondary-rgb: 56, 64, 80;
@@ -12117,10 +12119,10 @@ body::before {
 }
 
 .btn-secondary {
-  --bs-btn-color: #f8c800;
+  --bs-btn-color: #ffffff;
   --bs-btn-bg: #384050;
   --bs-btn-border-color: #f8c800;
-  --bs-btn-hover-color: #384050;
+  --bs-btn-hover-color: #ffffff;
   --bs-btn-hover-bg: #f8c800;
   --bs-btn-hover-border-color: #384050;
   --bs-btn-focus-shadow-rgb: 36, 29, 24;
@@ -12137,12 +12139,18 @@ body::before {
 }
 
 footer a:hover,
-footer a:focus {
+footer a:focus,
+.card .card-body .card-link a:hover,
+.card .card-body .card-link a:focus {
   color: var(--bs-primary) !important;
   text-decoration-color: var(--bs-primary) !important;
 }
 
 /* ------------------------------------------------ SPACING ----------------------------------------------------*/
+.mt-0-1 {
+  margin-top: 0.1rem;
+}
+
 .mt-6 {
   margin-top: 6rem;
 }
@@ -12179,6 +12187,10 @@ footer a:focus {
   margin-bottom: 18rem;
 }
 
+.ms-neg-075 {
+  margin-left: -0.75rem;
+}
+
 .h-0 {
   height: 0px !important;
 }
@@ -12204,8 +12216,8 @@ footer a:focus {
   font-size: calc(6rem + 4.5vw);
 }
 
-.w-18-rem {
-  width: 18rem;
+.w-max-18-rem {
+  max-width: 18rem;
 }
 
 /*---------------------------------------- FONT ICONS------------------------------*/
