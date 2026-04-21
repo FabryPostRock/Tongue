@@ -64,8 +64,7 @@ export class News extends Observable {
           dateToReadbleStr = new Date(item.time).toString().match(/^(.+?)\s\d{2}:\d{2}:\d{2}/)[1];
         }
       }
-
-      this.items.set(item.id, {
+      const savedNews = {
         id: item.id,
         by: item.by,
         score: item?.score ? item.score : 0,
@@ -73,8 +72,9 @@ export class News extends Observable {
         time: dateToReadbleStr ? dateToReadbleStr : ' - ',
         title: item.title,
         url: item.url,
-      });
-      this.notify({ noteType: 'add', news: item });
+      };
+      this.items.set(item.id, savedNews);
+      this.notify({ noteType: 'add', news: savedNews });
     }
   }
 
