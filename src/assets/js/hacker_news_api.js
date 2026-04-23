@@ -1,12 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 export class HackerNewsAPI {
-  static URL_ID_DETAILS = (id) =>
-    `https://hacker-news.firebaseio.com/v0/item/${id}.json`;
+  static URL_ID_DETAILS = (id) => `https://hacker-news.firebaseio.com/v0/item/${id}.json`;
 
   static itemsIds = {
-    URL: "https://hacker-news.firebaseio.com/v0/newstories.json",
+    URL: 'https://hacker-news.firebaseio.com/v0/newstories.json',
     MAX_RETRIES: 3,
-    actualRetries: 0,
     response: null,
     error: null,
   };
@@ -19,12 +17,11 @@ export class HackerNewsAPI {
   };
 
   static async getAllNewsIDs(url) {
-    while (
-      HackerNewsAPI.itemsIds.actualRetries < HackerNewsAPI.itemsIds.MAX_RETRIES
-    ) {
+    let itemsIdsActualAttempts = 0;
+    while (itemsIdsActualAttempts < HackerNewsAPI.itemsIds.MAX_RETRIES) {
       try {
         HackerNewsAPI.itemsIds.response = await axios.get(url);
-        HackerNewsAPI.itemsIds.actualRetries += 1;
+        itemsIdsActualAttempts += 1;
         return {
           data: HackerNewsAPI.itemsIds.response?.data,
           ok: true,
@@ -33,12 +30,12 @@ export class HackerNewsAPI {
         };
       } catch (err) {
         HackerNewsAPI.itemsIds.error = err;
-        HackerNewsAPI.itemsIds.actualRetries += 1;
+        itemsIdsActualAttempts += 1;
         //non uso 'throw new Error' per non interrompere la ripetizione delle chiamate
         console.error(
           `Status:  ${HackerNewsAPI.itemsIds.error.response?.status}\n` +
             `Body: ${HackerNewsAPI.itemsIds.error.response?.data?.error}\n` +
-            `Tentativi rimasti : ${HackerNewsAPI.itemsIds.MAX_RETRIES - HackerNewsAPI.itemsIds.actualRetries}`,
+            `Tentativi rimasti : ${HackerNewsAPI.itemsIds.MAX_RETRIES - itemsIdsActualAttempts}`,
         );
       }
     }
@@ -51,19 +48,12 @@ export class HackerNewsAPI {
   }
 
   static async getBlockNewsDetails(id) {
-    while (
-      HackerNewsAPI.itemDetails.actualRetries <
-      HackerNewsAPI.itemDetails.MAX_RETRIES
-    ) {
+    let itemDetailsActualAttempts = 0;
+    while (itemDetailsActualAttempts < HackerNewsAPI.itemDetails.MAX_RETRIES) {
       try {
-        HackerNewsAPI.itemDetails.response = await axios.get(
-          HackerNewsAPI.URL_ID_DETAILS(id),
-        );
-        HackerNewsAPI.itemDetails.actualRetries += 1;
-        console.log(
-          "HackerNewsAPI.itemDetails.response",
-          HackerNewsAPI.itemDetails.response,
-        );
+        HackerNewsAPI.itemDetails.response = await axios.get(HackerNewsAPI.URL_ID_DETAILS(id));
+        itemDetailsActualAttempts += 1;
+        console.log('HackerNewsAPI.itemDetails.response', HackerNewsAPI.itemDetails.response);
         return {
           data: HackerNewsAPI.itemDetails.response?.data,
           ok: true,
@@ -72,12 +62,12 @@ export class HackerNewsAPI {
         };
       } catch (err) {
         HackerNewsAPI.itemDetails.error = err;
-        HackerNewsAPI.itemDetails.actualRetries += 1;
+        itemDetailsActualAttempts += 1;
         //non uso 'throw new Error' per non interrompere la ripetizione delle chiamate
         console.error(
           `Status:  ${HackerNewsAPI.itemDetails.error.response?.status}\n` +
             `Body: ${HackerNewsAPI.itemDetails.error.response?.data?.error}\n` +
-            `Tentativi rimasti : ${HackerNewsAPI.itemDetails.MAX_RETRIES - HackerNewsAPI.itemDetails.actualRetries}`,
+            `Tentativi rimasti : ${HackerNewsAPI.itemDetails.MAX_RETRIES - itemDetailsActualAttempts}`,
         );
       }
     }
@@ -91,20 +81,18 @@ export class HackerNewsAPI {
   }
 
   constructor() {
-    throw new Error("HackerNewsAPI cannot be instantiated.");
+    throw new Error('HackerNewsAPI cannot be instantiated.');
   }
 
   static reset() {
     HackerNewsAPI.itemsIds = {
       ...HackerNewsAPI.itemsIds,
-      actualRetries: 0,
       response: null,
       error: null,
     };
 
     HackerNewsAPI.itemDetails = {
       ...HackerNewsAPI.itemDetails,
-      actualRetries: 0,
       response: null,
       error: null,
     };
