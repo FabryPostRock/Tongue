@@ -45,8 +45,8 @@ export class News extends Observable {
   }
 
   addNews(item) {
-    if (!item || !item.id || !item.by || !item.url || !item.title || !item.type) {
-      throw new TypeError('item deve avere id e by url type e title');
+    if (!item || !item.id || !item.by || !item.title || !item.type) {
+      throw new TypeError('item deve avere id, by, url o text, type e title');
     }
     const el = this.items.get(item.id);
     let dateUnix = 'Invalid Date';
@@ -64,6 +64,7 @@ export class News extends Observable {
           dateToReadbleStr = new Date(item.time).toString().match(/^(.+?)\s\d{2}:\d{2}:\d{2}/)[1];
         }
       }
+
       const savedNews = {
         id: item.id,
         by: item.by,
@@ -71,7 +72,9 @@ export class News extends Observable {
         // Formato Fri Apr 17 2026
         time: dateToReadbleStr ? dateToReadbleStr : ' - ',
         title: item.title,
-        url: item.url,
+        //url and text not always exist
+        url: item?.url && typeof item?.url == 'string' ? item?.url : null,
+        text: item?.text && typeof item?.text == 'string' ? item?.text : null,
       };
       this.items.set(item.id, savedNews);
       this.notify({ noteType: 'add', news: savedNews });

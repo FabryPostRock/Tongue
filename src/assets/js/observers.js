@@ -38,30 +38,60 @@ export function createNewsDomEl(news) {
     const divCard = document.createElement('div');
     divCard.className = 'card col-12 col-md-4 col-lg-3 w-max-18-rem m-2';
     divCard.setAttribute('data-news-id', news.id);
-
-    divCard.innerHTML = `
-    <div class="card-body">
-      <h5 class="card-title secondary-color">${news.title}</h5>
-      <div class="mb-3 d-flex justify-content-between">
-        <div class="d-flex align-items-center gap-2">
-          <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">article_person</span>
-          <small class="text-muted mb-0 lh-1">${news.by}</small>
-        </div>
-        <div class="d-flex align-items-center gap-2">
-          <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">thumb_up</span>
-          <span class="secondary-color lh-1">${news.score}</span>
-        </div>
-      </div>
-      <div class="mb-3 d-flex justify-content-between">
-        <a href="${news.url}" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Leggi</a>
-        <div class="d-flex align-items-end gap-2">
-          <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">calendar_month</span>
-          <small class="text-muted mb-0 lh-1">${news.time}</small>
-        </div>
-      </div>
-    </div>
-  `;
-
+    if (news?.url) {
+      divCard.innerHTML = `
+            <div class="card-body">
+            <h5 class="card-title secondary-color">${news.title}</h5>
+            <div class="mb-3 d-flex justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">article_person</span>
+                <small class="text-muted mb-0 lh-1">${news.by}</small>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">thumb_up</span>
+                <span class="secondary-color lh-1">${news.score}</span>
+                </div>
+            </div>
+            <div class="mb-3 d-flex justify-content-between">
+                <a href="${news.url}" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Leggi</a>
+                <div class="d-flex align-items-end gap-2">
+                <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">calendar_month</span>
+                <small class="text-muted mb-0 lh-1">${news.time}</small>
+                </div>
+            </div>
+            </div>
+            `;
+    } else if (news?.text) {
+      divCard.innerHTML = `
+            <div class="card-body">
+            <h5 class="card-title secondary-color">${news.title}</h5>
+            <p class="card-text">
+                ${news.text.slice(0, 100)}
+                <details>
+                    <summary>Mostra altro</summary>
+                    ${news.text.slice(100)}
+                </details>
+            </p>
+            <div class="mb-3 d-flex justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">article_person</span>
+                <small class="text-muted mb-0 lh-1">${news.by}</small>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">thumb_up</span>
+                <span class="secondary-color lh-1">${news.score}</span>
+                </div>
+            </div>
+            <div class="mb-3 d-flex justify-content-between">
+                 
+                <div class="d-flex align-items-end gap-2">
+                <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">calendar_month</span>
+                <small class="text-muted mb-0 lh-1">${news.time}</small>
+                </div>
+            </div>
+            </div>
+            `;
+    }
     return divCard;
   } else {
     throw new TypeError(`The expected parameter type is Object but ${typeof news}`);

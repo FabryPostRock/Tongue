@@ -11,6 +11,7 @@ async function getNewsBlock(obs, { kItemsIds, kIdxStartId }) {
   const NUM_NEWS_BLOCK = 10;
   let itemsIds = null;
   let setTid = null;
+
   if (kItemsIds) {
     itemsIds = JSON.parse(sessionStorage.getItem(kItemsIds));
   } else {
@@ -27,46 +28,45 @@ async function getNewsBlock(obs, { kItemsIds, kIdxStartId }) {
     }
     let idxEndId = null;
     // stabilisco l'indice finale del blocco di news
+
     if (idxStartId + NUM_NEWS_BLOCK - 1 > itemsIds.data.length) {
+      console.log(
+        `INDICI (idxStartId + NUM_NEWS_BLOCK - 1 > itemsIds.data.length) ${idxStartId} - ${idxEndId} - ${itemsIds.data.length}`,
+      );
       idxEndId = itemsIds.data.length;
     } else {
       idxEndId = idxStartId + NUM_NEWS_BLOCK - 1;
     }
-
+    obs.subscribe(renderNewsChange);
     for (let i = idxStartId; i < idxEndId; i++) {
-      console.log('AAAAAA');
+      console.log(`INDICI ${idxStartId} - ${idxEndId} - ${itemsIds.data.length}`);
       let newsData = null;
-      /*setTid = setTimeout(async () => {
-        newsData = await HackerNewsAPI.getBlockNewsDetails(itemsIds.data[i]);
-        obs.subscribe(renderNewsChange);
-        if (newsData?.data) obs.addNews(newsData.data);
-        console.log('BBBBBBBB');
-      }, 2000);*/
       newsData = await HackerNewsAPI.getBlockNewsDetails(itemsIds.data[i]);
-      //obs.subscribe(renderNewsChange);
+
       //if (newsData?.data) obs.addNews(newsData.data);
-      console.log('CCCCCCCCC');
-      console.log('newsData', newsData.data.by);
+      console.log('newsData', newsData.data.id);
     }
-    if (idxEndId + 1 < itemsIds.length) {
+    if (idxEndId + 1 < itemsIds.data.length) {
       sessionStorage.setItem(kIdxStartId, idxEndId + 1);
+      console.log(`INDICI idxEndId + 1 < itemsIds.data.length  ${idxStartId} - ${idxEndId} `);
     }
-    clearTimeout(setTid);
-    console.log('DDDDDDDDDD');
+
+    console.log(`INDICI ${idxStartId} - ${idxEndId} `);
   } else {
     throw new Error('Could not retrive news Ids!');
   }
 }
 
 try {
+  const n = new News();
   document.addEventListener('DOMContentLoaded', async () => {
     const itemsIds = await HackerNewsAPI.getAllNewsIDs(HackerNewsAPI.itemsIds.URL);
     // Oggetto da salvare in storage come stringa
-    sessionStorage.setItem(STORAGE_NEWS.kItemsIds, JSON.stringify(itemsIds));
+    await sessionStorage.setItem(STORAGE_NEWS.kItemsIds, JSON.stringify(itemsIds));
+    console.log('********************************PRIMA CALL**************************************');
+    await getNewsBlock(n, STORAGE_NEWS);
+    console.log('********************************FINE********************************************');
   });
-
-  const n = new News();
-  await getNewsBlock(n, STORAGE_NEWS);
 } catch (err) {
   console.error(err);
 }
