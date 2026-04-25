@@ -7,23 +7,28 @@ const STORAGE_NEWS = {
   kIdxStartId: 'news:idxStartId',
 };
 
+function safeGetFromStorage(el) {
+  if (el)
+    try {
+      return JSON.parse(sessionStorage.getItem(el));
+    } catch (err) {
+      throw new Error('el parsing has generated an error!', err);
+    }
+  else {
+    throw new Error('el parameter was null or undefined');
+  }
+}
 async function getNewsBlock(obs, { kItemsIds, kIdxStartId }) {
   const NUM_NEWS_BLOCK = 10;
   let itemsIds = null;
   let setTid = null;
 
-  if (kItemsIds) {
-    itemsIds = JSON.parse(sessionStorage.getItem(kItemsIds));
-  } else {
-    return;
-  }
+  const itemsIds = safeGetFromStorage(kItemsIds);
   // itemsIds dev'essere un array
   if (itemsIds?.data && Object.getPrototypeOf(itemsIds?.data) === Array.prototype) {
-    let idxStartId = null;
+    let idxStartId = JSON.parse(sessionStorage.getItem(kIdxStartId));
     // verifico se è già stato salvato l'indice di partenza del blocco di news
-    if (sessionStorage.getItem(kIdxStartId)) {
-      idxStartId = sessionStorage.getItem(kIdxStartId);
-    } else {
+    if (!idxStartId || typeof idxStartId !== 'number') {
       idxStartId = 0;
     }
     let idxEndId = null;
@@ -48,9 +53,7 @@ async function getNewsBlock(obs, { kItemsIds, kIdxStartId }) {
     }
     if (idxEndId + 1 < itemsIds.data.length) {
       sessionStorage.setItem(kIdxStartId, idxEndId + 1);
-      console.log(`INDICI idxEndId + 1 < itemsIds.data.length  ${idxStartId} - ${idxEndId} `);
     }
-
     console.log(`INDICI ${idxStartId} - ${idxEndId} `);
   } else {
     throw new Error('Could not retrive news Ids!');
@@ -59,6 +62,7 @@ async function getNewsBlock(obs, { kItemsIds, kIdxStartId }) {
 
 try {
   const n = new News();
+
   document.addEventListener('DOMContentLoaded', async () => {
     const itemsIds = await HackerNewsAPI.getAllNewsIDs(HackerNewsAPI.itemsIds.URL);
     // Oggetto da salvare in storage come stringa
