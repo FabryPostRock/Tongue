@@ -1,6 +1,7 @@
 import { HackerNewsAPI } from './hacker_news_api.js';
 import { News } from './observable.js';
 import { renderNewsChange } from './observers.js';
+import { safeStorage } from './utilities.js';
 
 const STORAGE_NEWS = {
   kItemsIds: 'news:itemsIds',
@@ -23,7 +24,7 @@ async function getNewsBlock(obs, { kItemsIds, kIdxStartId }) {
   let itemsIds = null;
   let setTid = null;
 
-  const itemsIds = safeGetFromStorage(kItemsIds);
+  itemsIds = safeGetFromStorage(kItemsIds);
   // itemsIds dev'essere un array
   if (itemsIds?.data && Object.getPrototypeOf(itemsIds?.data) === Array.prototype) {
     let idxStartId = JSON.parse(sessionStorage.getItem(kIdxStartId));
@@ -62,7 +63,9 @@ async function getNewsBlock(obs, { kItemsIds, kIdxStartId }) {
 
 try {
   const n = new News();
-
+  safeStorage.SetTo(sessionStorage, 'test', 10);
+  const test2 = safeStorage.GetFrom(sessionStorage, 'test');
+  console.log(test2);
   document.addEventListener('DOMContentLoaded', async () => {
     const itemsIds = await HackerNewsAPI.getAllNewsIDs(HackerNewsAPI.itemsIds.URL);
     // Oggetto da salvare in storage come stringa
