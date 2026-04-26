@@ -6,54 +6,45 @@ import { safeStorage } from './utilities.js';
 const STORAGE_NEWS = {
   kItemsIds: 'news:itemsIds',
   kIdxStartId: 'news:idxStartId',
+  kEnNewsUpdates: 'news:enNewsUpdates',
 };
 
-function safeGetFromStorage(el) {
-  if (el)
-    try {
-      return JSON.parse(sessionStorage.getItem(el));
-    } catch (err) {
-      throw new Error('el parsing has generated an error!', err);
-    }
-  else {
-    throw new Error('el parameter was null or undefined');
-  }
-}
-async function getNewsBlock(obs, { kItemsIds, kIdxStartId }) {
+async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates }) {
   const NUM_NEWS_BLOCK = 10;
-  let itemsIds = null;
+  const itemsIds = safeStorage.getFrom(sessionStorage, kItemsIds);
   let setTid = null;
+  let enNewsUpdates = null;
+  enNewsUpdates = safeStorage.getFrom(sessionStorage, kEnNewsUpdates);
 
-  itemsIds = safeGetFromStorage(kItemsIds);
   // itemsIds dev'essere un array
   if (itemsIds?.data && Object.getPrototypeOf(itemsIds?.data) === Array.prototype) {
-    let idxStartId = JSON.parse(sessionStorage.getItem(kIdxStartId));
+    let idxStartId = safeStorage.getFrom(sessionStorage, kIdxStartId);
     // verifico se è già stato salvato l'indice di partenza del blocco di news
     if (!idxStartId || typeof idxStartId !== 'number') {
       idxStartId = 0;
     }
     let idxEndId = null;
     // stabilisco l'indice finale del blocco di news
-
     if (idxStartId + NUM_NEWS_BLOCK - 1 > itemsIds.data.length) {
-      console.log(
-        `INDICI (idxStartId + NUM_NEWS_BLOCK - 1 > itemsIds.data.length) ${idxStartId} - ${idxEndId} - ${itemsIds.data.length}`,
-      );
       idxEndId = itemsIds.data.length;
     } else {
       idxEndId = idxStartId + NUM_NEWS_BLOCK - 1;
     }
     obs.subscribe(renderNewsChange);
-    for (let i = idxStartId; i < idxEndId; i++) {
-      console.log(`INDICI ${idxStartId} - ${idxEndId} - ${itemsIds.data.length}`);
-      let newsData = null;
-      newsData = await HackerNewsAPI.getBlockNewsDetails(itemsIds.data[i]);
+    if (!enNewsUpdates) {
+      for (let i = idxStartId; i < idxEndId; i++) {
+        console.log(`INDICI ${idxStartId} - ${idxEndId} - ${i}`);
+        let newsData = null;
+        newsData = await HackerNewsAPI.getBlockNewsDetails(itemsIds.data[i]);
 
-      //if (newsData?.data) obs.addNews(newsData.data);
-      console.log('newsData', newsData.data.id);
+        //if (newsData?.data) obs.addNews(newsData.data);
+        console.log('newsData', newsData.data.id);
+      }
     }
     if (idxEndId + 1 < itemsIds.data.length) {
-      sessionStorage.setItem(kIdxStartId, idxEndId + 1);
+      safeStorage.setTo(sessionStorage, kIdxStartId, idxEndId + 1);
+    } else {
+      safeStorage.setTo(sessionStorage, kEnNewsUpdates, true);
     }
     console.log(`INDICI ${idxStartId} - ${idxEndId} `);
   } else {
@@ -63,13 +54,14 @@ async function getNewsBlock(obs, { kItemsIds, kIdxStartId }) {
 
 try {
   const n = new News();
-  safeStorage.SetTo(sessionStorage, 'test', 10);
-  const test2 = safeStorage.GetFrom(sessionStorage, 'test');
-  console.log(test2);
+  if (!safeStorage.getFrom(sessionStorage, STORAGE_NEWS.kEnNewsUpdates))
+    safeStorage.setTo(sessionStorage, STORAGE_NEWS.kEnNewsUpdates, false);
+
   document.addEventListener('DOMContentLoaded', async () => {
     const itemsIds = await HackerNewsAPI.getAllNewsIDs(HackerNewsAPI.itemsIds.URL);
     // Oggetto da salvare in storage come stringa
-    await sessionStorage.setItem(STORAGE_NEWS.kItemsIds, JSON.stringify(itemsIds));
+    //safeStorage.setTo(sessionStorage, STORAGE_NEWS.kIdxStartId, 495);
+    safeStorage.setTo(sessionStorage, STORAGE_NEWS.kItemsIds, itemsIds);
     console.log('********************************PRIMA CALL**************************************');
     await getNewsBlock(n, STORAGE_NEWS);
     console.log('********************************FINE********************************************');
