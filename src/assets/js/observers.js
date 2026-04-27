@@ -36,11 +36,18 @@ export function createNewsDomEl(news) {
   if (typeof news === 'object') {
     // data-news-id is important to identify the object again.
     const divCard = document.createElement('div');
-    divCard.className = 'card col-12 col-md-4 col-lg-3 w-max-18-rem m-2';
+    divCard.className = 'card flex-fill col-12 col-md-4 col-lg-3 w-max-18-rem m-2 ';
     divCard.setAttribute('data-news-id', news.id);
     if (news?.url) {
+      /*
+      flex-fill : definisce 
+        flex-grow: 1 !important;
+        flex-shrink: 1 !important;
+      mt-auto : serve a strechare la parte bassa in modo che venga spinta in basso
+      */
       divCard.innerHTML = `
-            <div class="card-body">
+                         
+            <div class="card-body d-flex flex-column">
             <h5 class="card-title secondary-color">${news.title}</h5>
             <div class="mb-3 d-flex justify-content-between">
                 <div class="d-flex align-items-center gap-2">
@@ -52,7 +59,7 @@ export function createNewsDomEl(news) {
                 <span class="secondary-color lh-1">${news.score}</span>
                 </div>
             </div>
-            <div class="mb-3 d-flex justify-content-between">
+            <div class="mt-auto mb-3 d-flex justify-content-between">
                 <a href="${news.url}" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Leggi</a>
                 <div class="d-flex align-items-end gap-2">
                 <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">calendar_month</span>
@@ -63,7 +70,7 @@ export function createNewsDomEl(news) {
             `;
     } else if (news?.text) {
       divCard.innerHTML = `
-            <div class="card-body">
+            <div class="card-body d-flex flex-column">
             <h5 class="card-title secondary-color">${news.title}</h5>
             <p class="card-text">
                 ${news.text.slice(0, 100)}
@@ -82,7 +89,7 @@ export function createNewsDomEl(news) {
                 <span class="secondary-color lh-1">${news.score}</span>
                 </div>
             </div>
-            <div class="mb-3 d-flex justify-content-between">
+            <div class="mt-auto mb-3 d-flex justify-content-between">
                  
                 <div class="d-flex align-items-end gap-2">
                 <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">calendar_month</span>
