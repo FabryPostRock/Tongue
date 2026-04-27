@@ -9,14 +9,30 @@ const STORAGE_NEWS = {
   kEnNewsUpdates: 'news:enNewsUpdates',
 };
 
-async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates }) {
+export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates }) {
   const NUM_NEWS_BLOCK = 10;
-  const itemsIds = safeStorage.getFrom(sessionStorage, kItemsIds);
   let setTid = null;
   let enNewsUpdates = null;
+  if (
+    !kItemsIds ||
+    !kIdxStartId ||
+    !kEnNewsUpdates ||
+    !obs ||
+    typeof kItemsIds !== 'string' ||
+    typeof kIdxStartId !== 'string' ||
+    typeof kEnNewsUpdates !== 'string' ||
+    Object.getPrototypeOf(obs) !== News.prototype
+  ) {
+    throw new Error('One or more function parameters are not correct or missing!');
+  }
+  const itemsIds = safeStorage.getFrom(sessionStorage, kItemsIds);
   enNewsUpdates = safeStorage.getFrom(sessionStorage, kEnNewsUpdates);
 
-  // itemsIds dev'essere un array
+  //Check enNewsUpdates
+  if (enNewsUpdates == null || enNewsUpdates == undefined)
+    throw new Error("Can't proceed because enNewsUpdates is not valid");
+
+  // itemsIds.data dev'essere un array
   if (itemsIds?.data && Object.getPrototypeOf(itemsIds?.data) === Array.prototype) {
     let idxStartId = safeStorage.getFrom(sessionStorage, kIdxStartId);
     // verifico se è già stato salvato l'indice di partenza del blocco di news
@@ -25,10 +41,10 @@ async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates }) {
     }
     let idxEndId = null;
     // stabilisco l'indice finale del blocco di news
-    if (idxStartId + NUM_NEWS_BLOCK - 1 > itemsIds.data.length) {
+    if (idxStartId + NUM_NEWS_BLOCK > itemsIds.data.length) {
       idxEndId = itemsIds.data.length;
     } else {
-      idxEndId = idxStartId + NUM_NEWS_BLOCK - 1;
+      idxEndId = idxStartId + NUM_NEWS_BLOCK;
     }
     obs.subscribe(renderNewsChange);
     if (!enNewsUpdates) {
@@ -41,12 +57,12 @@ async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates }) {
         console.log('newsData', newsData.data.id);
       }
     }
-    if (idxEndId + 1 < itemsIds.data.length) {
-      safeStorage.setTo(sessionStorage, kIdxStartId, idxEndId + 1);
+    if (idxEndId < itemsIds.data.length) {
+      safeStorage.setTo(sessionStorage, kIdxStartId, idxEndId);
     } else {
+      safeStorage.setTo(sessionStorage, kIdxStartId, idxEndId);
       safeStorage.setTo(sessionStorage, kEnNewsUpdates, true);
     }
-    console.log(`INDICI ${idxStartId} - ${idxEndId} `);
   } else {
     throw new Error('Could not retrive news Ids!');
   }
@@ -60,7 +76,6 @@ try {
   document.addEventListener('DOMContentLoaded', async () => {
     const itemsIds = await HackerNewsAPI.getAllNewsIDs(HackerNewsAPI.itemsIds.URL);
     // Oggetto da salvare in storage come stringa
-    //safeStorage.setTo(sessionStorage, STORAGE_NEWS.kIdxStartId, 495);
     safeStorage.setTo(sessionStorage, STORAGE_NEWS.kItemsIds, itemsIds);
     console.log('********************************PRIMA CALL**************************************');
     await getNewsBlock(n, STORAGE_NEWS);
