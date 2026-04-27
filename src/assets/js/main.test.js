@@ -89,10 +89,15 @@ describe('getNewsBlock', () => {
       }
       return null;
     });
+
+    vi.spyOn(n, 'subscribe').mockImplementation(() => {});
+    vi.spyOn(n, 'addNews').mockImplementation(() => {});
+    vi.spyOn(n, 'notify').mockImplementation(() => {});
     // se non faccio il mock qua fa la chiamata vera. Devo anche mockare l'oggetto restituito perchè
     // questo metodo lo restituisce.
     vi.spyOn(HackerNewsAPI, 'getBlockNewsDetails').mockResolvedValue({
-      data: { id: 1 },
+      // l' item è mockato quindi può anche non essere corretto.
+      data: { id: 47777174, by: 'fredrikaverpil' },
       ok: true,
       status: 200,
       error: null,
@@ -125,6 +130,8 @@ describe('getNewsBlock', () => {
     const spySetTo = vi.spyOn(ss.safeStorage, 'setTo').mockImplementation(() => {});
     // finta implementazione di subscribe dove non viene eseguito nulla
     vi.spyOn(n, 'subscribe').mockImplementation(() => {});
+    vi.spyOn(n, 'addNews').mockImplementation(() => {});
+    vi.spyOn(n, 'notify').mockImplementation(() => {});
     // qui devo mockare la restituzione di un oggetto altrimenti il test non rispecchia il comportamento
     // reale del metodo
     vi.spyOn(HackerNewsAPI, 'getBlockNewsDetails').mockResolvedValue({
@@ -135,7 +142,6 @@ describe('getNewsBlock', () => {
     });
 
     await getNewsBlock(n, STORAGE_NEWS);
-
     expect(spySetTo).toHaveBeenCalledWith(sessionStorage, kIdxStartId, expectedNewIdxEndId);
   });
 
@@ -164,6 +170,8 @@ describe('getNewsBlock', () => {
     const spySetTo = vi.spyOn(ss.safeStorage, 'setTo').mockImplementation(() => {});
     // finta implementazione di subscribe dove non viene eseguito nulla
     vi.spyOn(n, 'subscribe').mockImplementation(() => {});
+    vi.spyOn(n, 'addNews').mockImplementation(() => {});
+    vi.spyOn(n, 'notify').mockImplementation(() => {});
     // qui devo mockare la restituzione di un oggetto altrimenti il test non rispecchia il comportamento
     // reale del metodo
     vi.spyOn(HackerNewsAPI, 'getBlockNewsDetails').mockResolvedValue({
