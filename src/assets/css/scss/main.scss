@@ -245,7 +245,7 @@ button:hover {
   }
 }
 
-@media only screen and (min-width: 0px) and (max-width: 768px) {
+@media only screen and (min-width: 0px) and (max-width: 767px) {
   .row-md-none {
     display: flex;
     justify-content: center;
@@ -267,7 +267,7 @@ button:hover {
 }
 
 /* Tablet Styles */
-@media only screen and (min-width: 576px) and (max-width: 992px) {
+@media only screen and (min-width: 576px) and (max-width: 991px) {
   .mt-md-lg-9 {
     margin-top: ($spacer * 15);
   }
@@ -277,10 +277,10 @@ button:hover {
   }
 }
 
-@media only screen and (min-width: 993px) and (max-width: 1200px) {
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
 }
 
-@media only screen and (min-width: 1201px) and (max-width: 1400px) {
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
 }
 
 @media only screen and (min-width: 576px) and (max-width: 2048px) {

@@ -12309,7 +12309,7 @@ button:hover .material-symbols-outlined.g-icon-secondary-color {
     font-size: 4rem;
   }
 }
-@media only screen and (min-width: 0px) and (max-width: 768px) {
+@media only screen and (min-width: 0px) and (max-width: 767px) {
   .row-md-none {
     display: flex;
     justify-content: center;
@@ -12327,7 +12327,7 @@ button:hover .material-symbols-outlined.g-icon-secondary-color {
   }
 }
 /* Tablet Styles */
-@media only screen and (min-width: 576px) and (max-width: 992px) {
+@media only screen and (min-width: 576px) and (max-width: 991px) {
   .mt-md-lg-9 {
     margin-top: 15rem;
   }
