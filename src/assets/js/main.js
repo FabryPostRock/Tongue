@@ -77,9 +77,21 @@ try {
     const itemsIds = await HackerNewsAPI.getAllNewsIDs(HackerNewsAPI.itemsIds.URL);
     // Oggetto da salvare in storage come stringa
     safeStorage.setTo(sessionStorage, STORAGE_NEWS.kItemsIds, itemsIds);
+
     console.log('********************************PRIMA CALL**************************************');
     await getNewsBlock(n, STORAGE_NEWS);
     console.log('********************************FINE********************************************');
+    const parentNode2 = document.querySelector('#news-container');
+    console.log(parentNode2);
+    const newsItems = parentNode2.querySelectorAll('.news-item');
+    console.log(newsItems);
+    newsItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        newsItems.forEach((el) => el.classList.remove('is-expanded'));
+        item.classList.add('is-expanded');
+        console.log('AAAAAAAAAAAAAAAAAAAAA');
+      });
+    });
   });
 } catch (err) {
   console.error(err);

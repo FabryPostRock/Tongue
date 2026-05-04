@@ -75,7 +75,7 @@ export function createNewsDomEl(news) {
   if (typeof news === 'object') {
     // data-news-id is important to identify the object again.
     const divCard = document.createElement('div');
-    divCard.className = 'news-item';
+    divCard.className = 'news-item cursor-pointer';
     divCard.setAttribute('data-news-id', news.id);
 
     if (news?.url) {
