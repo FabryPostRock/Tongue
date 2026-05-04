@@ -12259,6 +12259,43 @@ button:hover .material-symbols-outlined.g-icon-secondary-color {
   cursor: pointer;
 }
 
+/*---------------------------------------------------------GRID--------------------------------------------------*/
+#news-container {
+  display: grid;
+  /*
+  La griglia ha una sola colonna che occupa 1 frazione dello spazio disponibile.
+  Sui viewport piccoli, ogni card occupa tutta la larghezza.
+  */
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  grid-auto-flow: dense;
+}
+
+#news-container > .news-item {
+  min-width: 0;
+}
+
+#news-container > .news-item .card {
+  height: 100%;
+}
+
+#news-container > .news-item.is-expanded {
+  /*
+  Significa : questo elemento parte dalla linea di colonna 1 e arriva fino all’ultima linea della griglia.
+  In grid la struttura è questa:
+  linea 1 | col 1 | linea 2 | col 2 | linea 3 | col 3 | linea 4 | col 4 | linea 5 etc..
+  */
+  grid-column: 1/-1;
+}
+
+.news-extra {
+  display: none;
+}
+
+.news-item.is-expanded .news-extra {
+  display: block;
+}
+
 /*---------------------------------------------------------MODAL---------------------------------------------------*/
 /* Mobile Styles */
 @media only screen and (max-width: 578px) {
@@ -12272,15 +12309,25 @@ button:hover .material-symbols-outlined.g-icon-secondary-color {
     font-size: 4rem;
   }
 }
-@media only screen and (min-width: 0px) and (max-width: 767px) {
+@media only screen and (min-width: 0px) and (max-width: 768px) {
   .row-md-none {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
   }
 }
+@media (min-width: 768px) {
+  #news-container {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 992px) {
+  #news-container {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
 /* Tablet Styles */
-@media only screen and (min-width: 579px) and (max-width: 992px) {
+@media only screen and (min-width: 576px) and (max-width: 992px) {
   .mt-md-lg-9 {
     margin-top: 15rem;
   }
@@ -12288,7 +12335,7 @@ button:hover .material-symbols-outlined.g-icon-secondary-color {
     margin-top: 12rem;
   }
 }
-@media only screen and (min-width: 579px) and (max-width: 2048px) {
+@media only screen and (min-width: 576px) and (max-width: 2048px) {
   .w-25-lg {
     width: 25% !important;
   }
