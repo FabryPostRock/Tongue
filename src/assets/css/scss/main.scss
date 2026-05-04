@@ -197,7 +197,8 @@ button:hover {
   */
   grid-template-columns: 1fr;
   gap: 1rem;
-
+  // Quando una news viene espansa, gli altri elementi possono risalire a riempire gli spazi vuoti sopra.
+  // Con row e col era più complicato da gestire.
   grid-auto-flow: dense;
 }
 
@@ -220,7 +221,7 @@ button:hover {
   grid-column: 1 / -1;
 }
 
-.news-extra {
+.news-item .news-extra {
   display: none;
 }
 

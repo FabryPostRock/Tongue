@@ -12288,7 +12288,7 @@ button:hover .material-symbols-outlined.g-icon-secondary-color {
   grid-column: 1/-1;
 }
 
-.news-extra {
+.news-item .news-extra {
   display: none;
 }
 
