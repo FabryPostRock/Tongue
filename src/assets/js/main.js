@@ -1,6 +1,6 @@
 import { HackerNewsAPI } from './hacker_news_api.js';
 import { News } from './observable.js';
-import { renderNewsChange } from './observers.js';
+import { renderNewsChange, parentNode } from './observers.js';
 import { safeStorage } from './utilities.js';
 
 const STORAGE_NEWS = {
@@ -78,19 +78,21 @@ try {
     // Oggetto da salvare in storage come stringa
     safeStorage.setTo(sessionStorage, STORAGE_NEWS.kItemsIds, itemsIds);
 
-    console.log('********************************PRIMA CALL**************************************');
+    //Loads n new news cards
     await getNewsBlock(n, STORAGE_NEWS);
-    console.log('********************************FINE********************************************');
-    const parentNode2 = document.querySelector('#news-container');
-    console.log(parentNode2);
-    const newsItems = parentNode2.querySelectorAll('.news-item');
-    console.log(newsItems);
+
+    // When a news is clicked it expands for the whole width of the page
+    const newsItems = parentNode.querySelectorAll('.news-item');
     newsItems.forEach((item) => {
-      item.addEventListener('click', () => {
-        newsItems.forEach((el) => el.classList.remove('is-expanded'));
-        item.classList.add('is-expanded');
-        console.log('AAAAAAAAAAAAAAAAAAAAA');
-      });
+      // Creation of Listeners that activate expansion if a news is clicked
+      if (item?.classList?.value.includes('cursor-pointer')) {
+        item.addEventListener('click', () => {
+          item?.classList;
+          newsItems.forEach((el) => el.classList.remove('is-expanded'));
+          item.classList.add('is-expanded');
+          console.log('AAAAAAAAAAAAAAAAAAAAA');
+        });
+      }
     });
   });
 } catch (err) {

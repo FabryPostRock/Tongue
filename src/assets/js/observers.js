@@ -69,16 +69,16 @@ NEWS TEMPLATE WITH TEXT
 
 /*---------------------------------------------------factory function DOM---------------------------------------------*/
 const NEWS_CONTAINER_ID = '#news-container';
-const parentNode = document.querySelector(NEWS_CONTAINER_ID);
+export const parentNode = document.querySelector(NEWS_CONTAINER_ID);
 
 export function createNewsDomEl(news) {
   if (typeof news === 'object') {
     // data-news-id is important to identify the object again.
     const divCard = document.createElement('div');
-    divCard.className = 'news-item cursor-pointer';
     divCard.setAttribute('data-news-id', news.id);
 
     if (news?.url) {
+      divCard.className = 'news-item';
       /*
       flex-fill : definisce 
         flex-grow: 1 !important;
@@ -110,6 +110,7 @@ export function createNewsDomEl(news) {
             </div>
             `;
     } else if (news?.text) {
+      divCard.className = 'news-item cursor-pointer';
       divCard.innerHTML = `
           <div class="card flex-fill"> 
             <div class="card-body d-flex flex-column">
