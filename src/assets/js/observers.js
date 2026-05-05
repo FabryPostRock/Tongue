@@ -135,6 +135,14 @@ export function createNewsDomEl(news) {
             </div>
           </div>
             `;
+
+      // Creation of Listeners that activate expansion if a news is clicked
+      divCard.addEventListener('click', () => {
+        const newsItems = parentNode.querySelectorAll('.news-item');
+        newsItems.forEach((el) => el.classList.remove('is-expanded'));
+        divCard.classList.add('is-expanded');
+        console.log('AAAAAAAAAAAAAAAAAAAAA');
+      });
     }
     return divCard;
   } else {

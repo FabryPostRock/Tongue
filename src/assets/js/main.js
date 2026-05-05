@@ -80,20 +80,6 @@ try {
 
     //Loads n new news cards
     await getNewsBlock(n, STORAGE_NEWS);
-
-    // When a news is clicked it expands for the whole width of the page
-    const newsItems = parentNode.querySelectorAll('.news-item');
-    newsItems.forEach((item) => {
-      // Creation of Listeners that activate expansion if a news is clicked
-      if (item?.classList?.value.includes('cursor-pointer')) {
-        item.addEventListener('click', () => {
-          item?.classList;
-          newsItems.forEach((el) => el.classList.remove('is-expanded'));
-          item.classList.add('is-expanded');
-          console.log('AAAAAAAAAAAAAAAAAAAAA');
-        });
-      }
-    });
   });
 } catch (err) {
   console.error(err);
