@@ -70,22 +70,7 @@ NEWS TEMPLATE WITH TEXT
 /*---------------------------------------------------factory function DOM---------------------------------------------*/
 const NEWS_CONTAINER_ID = '#news-container';
 export const parentNode = document.querySelector(NEWS_CONTAINER_ID);
-
-export function createNewsDomEl(news) {
-  if (typeof news === 'object') {
-    // data-news-id is important to identify the object again.
-    const divCard = document.createElement('div');
-    divCard.setAttribute('data-news-id', news.id);
-
-    if (news?.url) {
-      divCard.className = 'news-item';
-      /*
-      flex-fill : definisce 
-        flex-grow: 1 !important;
-        flex-shrink: 1 !important;
-      mt-auto : serve a strechare la parte bassa in modo che venga spinta in basso
-      */
-      divCard.innerHTML = `
+export let newsUrlInnerHTML = (news) => `
             <div class="card flex-fill">             
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title secondary-color">${news.title}</h5>
@@ -109,9 +94,8 @@ export function createNewsDomEl(news) {
               </div>
             </div>
             `;
-    } else if (news?.text) {
-      divCard.className = 'news-item cursor-pointer';
-      divCard.innerHTML = `
+
+export let newsTextInnerHTML = (news) => `
           <div class="card flex-fill"> 
             <div class="card-body d-flex flex-column">
               <h5 class="card-title secondary-color">${news.title}</h5>
@@ -135,6 +119,25 @@ export function createNewsDomEl(news) {
             </div>
           </div>
             `;
+
+export function createNewsDomEl(news) {
+  if (typeof news === 'object') {
+    // data-news-id is important to identify the object again.
+    const divCard = document.createElement('div');
+    divCard.setAttribute('data-news-id', news.id);
+
+    if (news?.url) {
+      divCard.className = 'news-item';
+      /*
+      flex-fill : definisce 
+        flex-grow: 1 !important;
+        flex-shrink: 1 !important;
+      mt-auto : serve a strechare la parte bassa in modo che venga spinta in basso
+      */
+      divCard.innerHTML = newsUrlInnerHTML(news);
+    } else if (news?.text) {
+      divCard.className = 'news-item cursor-pointer';
+      divCard.innerHTML = newsTextInnerHTML(news);
 
       // Creation of Listeners that activate expansion if a news is clicked
       divCard.addEventListener('click', () => {
