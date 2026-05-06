@@ -194,143 +194,6 @@ button:hover {
   cursor: pointer;
 }
 
-/*--------------------------------------------------------BUTTONS------------------------------------------------*/
-
-.load-more-wrap {
-  position: relative;
-  /*width: 14rem;
-  height: 3.5rem;*/
-}
-
-.load-more-btn {
-  position: relative;
-  display: block;
-  width: 9rem;
-  height: 1.5rem;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-  overflow: visible;
-}
-
-.line {
-  position: absolute;
-  top: 0rem;
-  display: block;
-  width: 30rem;
-  height: 0.1rem;
-  background: var(--bs-secondary);
-  opacity: 1;
-  box-shadow: 0.1rem 0.1rem 0.2rem rgba(var(--bs-gray-900-rgb), 1);
-  z-index: 0;
-  overflow: visible;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-// 2 overlapped polygons are created to manage the real btn and the shadow button
-.load-more-btn::before,
-.load-more-btn::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  clip-path: polygon(
-    0% 8%,
-    2% 4%,
-    6% 1%,
-    10% 0%,
-    90% 0%,
-    94% 1%,
-    98% 4%,
-    100% 8%,
-    86% 88%,
-    84% 94%,
-    82% 98%,
-    78% 100%,
-    22% 100%,
-    18% 98%,
-    16% 94%,
-    14% 88%
-  );
-}
-
-// main polygon
-.load-more-btn::before {
-  background: var(--bs-secondary);
-  z-index: 1;
-  transition:
-    transform 0.2s ease,
-    background 0.2s ease,
-    filter 0.2s ease;
-}
-
-// shadow polygon
-.load-more-btn::after {
-  background: rgba(var(--bs-gray-900-rgb), 0.6);
-  z-index: 0;
-  //transform: translateY(10px) scale(0.96);
-  //filter: blur(10px);
-  opacity: 0;
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease,
-    filter 0.2s ease;
-}
-
-.load-more-btn .material-symbols-outlined {
-  position: relative;
-  z-index: 2;
-  color: white;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-//------------HOVER--------------
-// hovering on the div has an effect on the span position
-.load-more-btn:hover > span {
-  transform: translateY(8px) scale(1.2);
-}
-
-// on hover the main polygon translates down
-.load-more-btn:hover::before {
-  transform: translateY(8px) scale(1.2);
-  background: var(--bs-primary);
-}
-
-// on hover the shadow polygon translates down more than the main polygon
-.load-more-btn:hover::after {
-  opacity: 1;
-  transform: translateY(14px) scale(1.2);
-  filter: blur(14px);
-}
-
-// If a hover on the button with class load-more-btn happens, the line follows the transformation
-.load-more-wrap:has(.load-more-btn:hover) .line {
-  transform: translateY(8px) scale(1.2);
-  background: var(--bs-primary);
-}
-
-//------------CLICK--------------
-// on hover the main polygon translates down
-.load-more-btn:active::before {
-  transform: translateY(0px) scale(1);
-  background: var(--bs-secondary);
-  filter: brightness(0.6);
-}
-
-// on hover the shadow polygon translates down more than the main polygon
-.load-more-btn:active::after {
-  opacity: 0;
-  transform: translateY(0px) scale(1);
-  filter: blur(14px);
-}
-
-.load-more-btn:active > span {
-  transform: translateY(0px) scale(1);
-}
-
-.load-more-wrap:has(.load-more-btn:active) .line {
-  transform: translateY(0px) scale(1);
-  background: var(--bs-secondary);
-}
 /*---------------------------------------------------------GRID--------------------------------------------------*/
 #news-container {
   display: grid;
@@ -386,6 +249,10 @@ button:hover {
 
   .material-symbols-outlined.g-icon-sm-4em {
     font-size: 4rem;
+  }
+
+  .line {
+    width: 12rem;
   }
 }
 
