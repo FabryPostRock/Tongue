@@ -81,6 +81,23 @@ try {
     //Loads n new news cards
     await getNewsBlock(n, STORAGE_NEWS);
   });
+
+  const btnLoadNews = document.querySelector('.load-more-btn');
+  btnLoadNews.addEventListener('click', async () => {
+    // This condition avoids a new click event while an event is already triggered
+    if (btnLoadNews.disabled) return;
+
+    btnLoadNews.disabled = true;
+
+    try {
+      await getNewsBlock(n, STORAGE_NEWS);
+    } catch (err) {
+      console.error(err);
+      //finally is always executed and is necessary in case of  getNewsBlock exception to re-enable the btn
+    } finally {
+      btnLoadNews.disabled = false;
+    }
+  });
 } catch (err) {
   console.error(err);
 }
