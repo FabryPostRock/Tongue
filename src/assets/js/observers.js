@@ -71,7 +71,7 @@ NEWS TEMPLATE WITH TEXT
 const NEWS_CONTAINER_ID = '#news-container';
 export const parentNode = document.querySelector(NEWS_CONTAINER_ID);
 export let newsUrlInnerHTML = (news) => `
-            <div class="card flex-fill">             
+            <div class="card flex-fill w-min-16-rem">             
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title secondary-color">${news.title}</h5>
                 <div class="mb-3 d-flex justify-content-between">
@@ -96,7 +96,7 @@ export let newsUrlInnerHTML = (news) => `
             `;
 
 export let newsTextInnerHTML = (news) => `
-          <div class="card flex-fill"> 
+          <div class="card flex-fill w-min-16-rem"> 
             <div class="card-body d-flex flex-column">
               <h5 class="card-title secondary-color">${news.title}</h5>
               <div class="news-extra">${news.text}</div>
@@ -144,7 +144,6 @@ export function createNewsDomEl(news) {
         const newsItems = parentNode.querySelectorAll('.news-item');
         newsItems.forEach((el) => el.classList.remove('is-expanded'));
         divCard.classList.add('is-expanded');
-        console.log('AAAAAAAAAAAAAAAAAAAAA');
       });
     }
     return divCard;
