@@ -31,18 +31,6 @@
   animation: cardEnlarge 0.9s ease-in-out infinite;
 }
 
-.slide-l-h1 {
-  --start-x: -200px;
-  --mid-x: 200px;
-  animation: textSlideFromLeft 1.2s ease-in-out forwards;
-}
-
-.slide-l-h2 {
-  --start-x: 600px;
-  --mid-x: -50px;
-  animation: textSlideFromLeft 1.4s ease-in-out forwards;
-}
-
 @keyframes textSlideFromLeft {
   0% {
     opacity: 0;
@@ -57,6 +45,29 @@
     transform: translate(0, 0);
   }
 }
+.slide-l-h1 {
+  --start-x: -200px;
+  --mid-x: 200px;
+  animation: textSlideFromLeft 1.2s ease-in-out forwards;
+}
+
+.slide-l-h2 {
+  --start-x: 600px;
+  --mid-x: -50px;
+  animation: textSlideFromLeft 1.4s ease-in-out forwards;
+}
+
+.reveal {
+  visibility: hidden;
+}
+
+.active {
+  visibility: visible;
+  --start-x: -200px;
+  --mid-x: 20px;
+  animation: textSlideFromLeft 0.6s ease-in-out forwards;
+}
+
 /* accessibilità: rispetta chi riduce le animazioni */
 @media (prefers-reduced-motion: reduce) {
   .card-enlarge {

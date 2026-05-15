@@ -1,4 +1,4 @@
-@import "colors";
+@import 'colors';
 
 //---------------------------------------------------------------Card----------------------------------------------------//
 @keyframes cardEnlarge {
@@ -28,18 +28,15 @@ $slide-duration: 1.2s;
 $slide-start-h2: 600px;
 $slide-mid-h2: -50px;
 $slide-duration-h2: 1.4s;
+
+$slide-start-div: -200px;
+$slide-mid-div: 20px;
+$slide-duration-div: 0.6s;
+
 @mixin text-slide-in($start-x: 0, $mid-x: 0, $duration: 1s) {
   --start-x: #{$start-x};
   --mid-x: #{$mid-x};
   animation: textSlideFromLeft $duration ease-in-out forwards;
-}
-
-.slide-l-h1 {
-  @include text-slide-in($slide-start-h1, $slide-mid-h1, $slide-duration);
-}
-
-.slide-l-h2 {
-  @include text-slide-in($slide-start-h2, $slide-mid-h2, $slide-duration-h2);
 }
 
 @keyframes textSlideFromLeft {
@@ -55,6 +52,23 @@ $slide-duration-h2: 1.4s;
     opacity: 1;
     transform: translate(0, 0);
   }
+}
+
+.slide-l-h1 {
+  @include text-slide-in($slide-start-h1, $slide-mid-h1, $slide-duration);
+}
+
+.slide-l-h2 {
+  @include text-slide-in($slide-start-h2, $slide-mid-h2, $slide-duration-h2);
+}
+
+.reveal {
+  visibility: hidden;
+}
+
+.active {
+  visibility: visible;
+  @include text-slide-in($slide-start-div, $slide-mid-div, $slide-duration-div);
 }
 
 /* accessibilità: rispetta chi riduce le animazioni */
