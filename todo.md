@@ -13,6 +13,5 @@ Logiche:
 
 Style:
 
-- grassetto titoli news
 - eliminare padding lx ed rx per la sezione founders
 - ~~background boh sulle card~~
