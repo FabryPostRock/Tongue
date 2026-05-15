@@ -10,6 +10,7 @@ const STORAGE_NEWS = {
 };
 
 export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates }) {
+  /* This function manages multiple news requests and the next news block to show*/
   const NUM_NEWS_BLOCK = 10;
   let setTid = null;
   let enNewsUpdates = null;
@@ -68,6 +69,23 @@ export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates
   }
 }
 
+async function getNewsBlockWrapper(el) {
+  // This condition avoids a new click event while an event is already triggered
+  if (el.disabled) return;
+
+  el.disabled = true;
+
+  try {
+    await getNewsBlock(n, STORAGE_NEWS);
+  } catch (err) {
+    console.error(err);
+    //finally is always executed and is necessary in case of  getNewsBlock exception to re-enable the btn
+  } finally {
+    el.disabled = false;
+  }
+}
+
+/*-------------------------MAIN ------------------------------*/
 try {
   const n = new News();
   if (!safeStorage.getFrom(sessionStorage, STORAGE_NEWS.kEnNewsUpdates))
@@ -79,7 +97,7 @@ try {
         intObs.observe(el);
       });
     } else {
-      console.log('Something went wrong in animations');
+      throw new Error('Page is loaded but something is wrong with animations');
     }
     const itemsIds = await HackerNewsAPI.getAllNewsIDs(HackerNewsAPI.itemsIds.URL);
     // Oggetto da salvare in storage come stringa
@@ -89,21 +107,13 @@ try {
     await getNewsBlock(n, STORAGE_NEWS);
   });
 
+  //btns to load news or reset the news counter
   const btnLoadNews = document.querySelector('.load-more-btn');
-  btnLoadNews.addEventListener('click', async () => {
-    // This condition avoids a new click event while an event is already triggered
-    if (btnLoadNews.disabled) return;
-
-    btnLoadNews.disabled = true;
-
-    try {
-      await getNewsBlock(n, STORAGE_NEWS);
-    } catch (err) {
-      console.error(err);
-      //finally is always executed and is necessary in case of  getNewsBlock exception to re-enable the btn
-    } finally {
-      btnLoadNews.disabled = false;
-    }
+  const btnResetAndLoadNews = document.querySelector('.reset-news-count-and-load-btn');
+  btnLoadNews.addEventListener('click', async () => await getNewsBlockWrapper(btnLoadNews));
+  btnResetAndLoadNews.addEventListener('click', async () => {
+    safeStorage.setTo(sessionStorage, STORAGE_NEWS.kIdxStartId, 0);
+    await getNewsBlockWrapper(btnResetAndLoadNews);
   });
 } catch (err) {
   console.error(err);
