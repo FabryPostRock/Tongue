@@ -13,5 +13,5 @@ Logiche:
 
 Style:
 
-- eliminare padding lx ed rx per la sezione founders
+- ~~eliminare padding lx ed rx per la sezione founders~~
 - ~~background boh sulle card~~
