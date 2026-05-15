@@ -170,3 +170,23 @@ export function renderNewsChange({ noteType, news }) {
     }
   }
 }
+
+/*---------------------------------------------------viewport in and out--------------------------------------------------------*/
+
+export const elements = document.querySelectorAll('.reveal');
+
+export const intObs = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      } else {
+        entry.target.classList.remove('active');
+      }
+    });
+  },
+  {
+    // Oltre questa soglia che * 100 restituisce una percentuale, l'oggetto viene mostrato con l'animazione
+    threshold: 0.2,
+  },
+);

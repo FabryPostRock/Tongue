@@ -1,5 +1,5 @@
 // vitest.config.js
-import { defineConfig } from "vitest/config";
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   server: {
@@ -7,10 +7,15 @@ export default defineConfig({
     open: true,
   },
   build: {
-    outDir: "dist", // cartella di output
+    outDir: 'dist', // cartella di output
     sourcemap: true, // abilita la generazione delle source map
   },
   test: {
+    environment: 'jsdom',
+    // questo file mocka la clsse IntersectionObserver che è un'API del browser e in jsdom non esiste.
+    setupFiles: ['./vitest.setup.js'],
+    // serve a ripristinare i global stub tra i test.
+    unstubGlobals: true,
     // clearMocks: true equivale a chiamare vi.clearAllMocks() prima di ogni test
     clearMocks: true,
     // mockReset: true equivale a chiamare vi.resetAllMocks() prima di ogni test

@@ -1,6 +1,6 @@
 import { HackerNewsAPI } from './hacker_news_api.js';
 import { News } from './observable.js';
-import { renderNewsChange, parentNode } from './observers.js';
+import { renderNewsChange, parentNode, elements, intObs } from './observers.js';
 import { safeStorage } from './utilities.js';
 
 const STORAGE_NEWS = {
@@ -74,6 +74,13 @@ try {
     safeStorage.setTo(sessionStorage, STORAGE_NEWS.kEnNewsUpdates, false);
 
   document.addEventListener('DOMContentLoaded', async () => {
+    if (elements && intObs && Object.getPrototypeOf(intObs) === IntersectionObserver.prototype) {
+      elements.forEach((el) => {
+        intObs.observe(el);
+      });
+    } else {
+      console.log('Something went wrong in animations');
+    }
     const itemsIds = await HackerNewsAPI.getAllNewsIDs(HackerNewsAPI.itemsIds.URL);
     // Oggetto da salvare in storage come stringa
     safeStorage.setTo(sessionStorage, STORAGE_NEWS.kItemsIds, itemsIds);
