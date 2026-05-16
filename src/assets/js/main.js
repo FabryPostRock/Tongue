@@ -9,6 +9,8 @@ const STORAGE_NEWS = {
   kEnNewsUpdates: 'news:enNewsUpdates',
 };
 
+const n = new News();
+
 export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates }) {
   /* This function manages multiple news requests and the next news block to show*/
   const NUM_NEWS_BLOCK = 10;
@@ -87,7 +89,6 @@ async function getNewsBlockWrapper(el) {
 
 /*-------------------------MAIN ------------------------------*/
 try {
-  const n = new News();
   if (!safeStorage.getFrom(sessionStorage, STORAGE_NEWS.kEnNewsUpdates))
     safeStorage.setTo(sessionStorage, STORAGE_NEWS.kEnNewsUpdates, false);
 

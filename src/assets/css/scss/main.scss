@@ -58,6 +58,15 @@ body::before {
   color: #{$secondary};
 }
 
+.white {
+  color: var(--bs-white);
+}
+
+.btn.icon-lh-1 {
+  --bs-btn-line-height: 1;
+  line-height: var(--bs-btn-line-height) !important;
+}
+
 .btn-big {
   --bs-btn-font-size: 4rem;
 }
@@ -71,7 +80,7 @@ body::before {
   --bs-btn-hover-border-color: #{$secondary};
   --bs-btn-focus-shadow-rgb: #{$bs-black-0x241d18-rgb};
   --bs-btn-active-color: #{$primary};
-  --bs-btn-active-bg: #{$bs-black-0x241d18};
+  --bs-btn-active-bg: #{$secondary};
   --bs-btn-active-border-color: #{$secondary};
   --bs-btn-disabled-color: #{$primary};
   --bs-btn-disabled-bg: #{$btn-disabled-bg};
@@ -203,6 +212,10 @@ button:hover {
 
 .material-symbols-outlined.g-icon-primary-color:hover {
   color: #{$primary};
+}
+
+.material-symbols-outlined.g-icon-white {
+  color: #ffffff;
 }
 /*-------------------------------------------------------SELECTORS-----------------------------------------------*/
 .cursor-pointer {

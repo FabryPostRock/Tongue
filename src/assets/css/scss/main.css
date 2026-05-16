@@ -12220,6 +12220,15 @@ body::before {
   color: #384050;
 }
 
+.white {
+  color: var(--bs-white);
+}
+
+.btn.icon-lh-1 {
+  --bs-btn-line-height: 1;
+  line-height: var(--bs-btn-line-height) !important;
+}
+
 .btn-big {
   --bs-btn-font-size: 4rem;
 }
@@ -12233,10 +12242,10 @@ body::before {
   --bs-btn-hover-border-color: #384050;
   --bs-btn-focus-shadow-rgb: 36, 29, 24;
   --bs-btn-active-color: #f8c800;
-  --bs-btn-active-bg: #241d18;
+  --bs-btn-active-bg: #384050;
   --bs-btn-active-border-color: #384050;
   --bs-btn-disabled-color: #f8c800;
-  --bs-btn-disabled-bg: rgba(226, 106, 8, 0.6);
+  --bs-btn-disabled-bg: rgba(233, 210, 80, 0.6);
   --bs-btn-disabled-border-color: #f8c800;
 }
 
@@ -12382,6 +12391,10 @@ button:hover .material-symbols-outlined.g-icon-secondary-color {
 
 .material-symbols-outlined.g-icon-primary-color:hover {
   color: #f8c800;
+}
+
+.material-symbols-outlined.g-icon-white {
+  color: #ffffff;
 }
 
 /*-------------------------------------------------------SELECTORS-----------------------------------------------*/
