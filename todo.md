@@ -15,3 +15,8 @@ Style:
 
 - ~~eliminare padding lx ed rx per la sezione founders~~
 - ~~background boh sulle card~~
+
+Deploy:
+
+- capire come creare cartella e codice di deploy con Vite
+- capire come fare il deploy su firebase hosting
