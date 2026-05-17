@@ -7,6 +7,7 @@ const STORAGE_NEWS = {
   kItemsIds: 'news:itemsIds',
   kIdxStartId: 'news:idxStartId',
   kEnNewsUpdates: 'news:enNewsUpdates',
+  kIsInitPage: 'news:isInitPage',
 };
 
 const n = new News();
@@ -88,10 +89,12 @@ async function getNewsBlockWrapper(el) {
 }
 
 /*-------------------------MAIN ------------------------------*/
+let itemsIds = null;
 try {
   if (!safeStorage.getFrom(sessionStorage, STORAGE_NEWS.kEnNewsUpdates))
     safeStorage.setTo(sessionStorage, STORAGE_NEWS.kEnNewsUpdates, false);
 
+  // When page is loaded
   document.addEventListener('DOMContentLoaded', async () => {
     if (elements && intObs && Object.getPrototypeOf(intObs) === IntersectionObserver.prototype) {
       elements.forEach((el) => {
@@ -100,10 +103,10 @@ try {
     } else {
       throw new Error('Page is loaded but something is wrong with animations');
     }
-    const itemsIds = await HackerNewsAPI.getAllNewsIDs(HackerNewsAPI.itemsIds.URL);
+    safeStorage.setTo(sessionStorage, STORAGE_NEWS.kIdxStartId, 0);
+    itemsIds = await HackerNewsAPI.getAllNewsIDs(HackerNewsAPI.itemsIds.URL);
     // Oggetto da salvare in storage come stringa
     safeStorage.setTo(sessionStorage, STORAGE_NEWS.kItemsIds, itemsIds);
-
     //Loads n new news cards
     await getNewsBlock(n, STORAGE_NEWS);
   });
@@ -112,9 +115,11 @@ try {
   const btnLoadNews = document.querySelector('.load-more-btn');
   const btnResetAndLoadNews = document.querySelector('.reset-news-count-and-load-btn');
   btnLoadNews.addEventListener('click', async () => await getNewsBlockWrapper(btnLoadNews));
-  btnResetAndLoadNews.addEventListener('click', async () => {
+
+  btnResetAndLoadNews.addEventListener('click', () => {
+    /*this action reloads the page and as consequence it updates the list of news*/
     safeStorage.setTo(sessionStorage, STORAGE_NEWS.kIdxStartId, 0);
-    await getNewsBlockWrapper(btnResetAndLoadNews);
+    location.reload();
   });
 } catch (err) {
   console.error(err);
