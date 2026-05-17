@@ -9,7 +9,7 @@ Logiche:
 
 - ~~button 'Carica altre' che alla pressione aggiunge altre 10 news~~
 - ~~TEST : testare il nuovo contenuto html delle news~~
-- creare un tasto per ripartire dalle prime news
+- ~~creare un tasto per ripartire dalle prime news~~
 
 Style:
 
