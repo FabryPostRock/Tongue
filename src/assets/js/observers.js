@@ -187,6 +187,6 @@ export const intObs = new IntersectionObserver(
   },
   {
     // Oltre questa soglia che * 100 restituisce una percentuale, l'oggetto viene mostrato con l'animazione
-    threshold: 0.2,
+    threshold: 0.1,
   },
 );

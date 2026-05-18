@@ -2,6 +2,7 @@ import { HackerNewsAPI } from './hacker_news_api.js';
 import { News } from './observable.js';
 import { renderNewsChange, parentNode, elements, intObs } from './observers.js';
 import { safeStorage } from './utilities.js';
+import { animate } from './animations.js';
 
 const STORAGE_NEWS = {
   kItemsIds: 'news:itemsIds',
@@ -121,6 +122,9 @@ try {
     safeStorage.setTo(sessionStorage, STORAGE_NEWS.kIdxStartId, 0);
     location.reload();
   });
+
+  // Lens that bounces around
+  animate();
 } catch (err) {
   console.error(err);
 }
