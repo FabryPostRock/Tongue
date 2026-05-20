@@ -74,7 +74,14 @@ export let newsUrlInnerHTML = (news) => `
           <article>
             <div class="card flex-fill w-min-16-rem">             
               <div class="card-body d-flex flex-column">
-                <h5 class="card-title secondary-color">${news.title}</h5>
+                <div class="d-flex flex-row justify-content-between">
+                  <h5 class="card-title secondary-color">${news.title}</h5>
+                  <a  
+                          class="btn white p-0 m-0  a-icon-hover"
+                          aria-label="Elimina dalla vista la news corrente">
+                    <span class="material-symbols-outlined g-icon-2em g-icon-secondary-color rounded-5 lh-2">close</span>
+                  </a>
+                </div>
                 <div class="mb-3 d-flex justify-content-between">
                     <div class="d-flex align-items-center gap-2">
                     <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">article_person</span>
@@ -101,7 +108,14 @@ export let newsTextInnerHTML = (news) => `
         <article>
           <div class="card flex-fill w-min-16-rem"> 
             <div class="card-body d-flex flex-column">
-              <h5 class="card-title secondary-color">${news.title}</h5>
+                <div class="d-flex flex-row justify-content-between">
+                  <h5 class="card-title secondary-color">${news.title}</h5>
+                  <a  
+                          class="btn white p-0 m-0  a-icon-hover"
+                          aria-label="Elimina dalla vista la news corrente">
+                    <span class="material-symbols-outlined g-icon-2em g-icon-secondary-color rounded-5 lh-2">close</span>
+                  </a>
+                </div>
               <div class="news-extra mb-auto">${news?.text}</div>
               <div class="mb-3 d-flex justify-content-between">
                   <div class="d-flex align-items-center gap-2">
