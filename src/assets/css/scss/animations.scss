@@ -89,7 +89,7 @@ body {
   background-repeat: repeat-y;
   background-size: cover;
   background-position: center;
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 .lens {
@@ -100,7 +100,6 @@ body {
   border-radius: 50%;
   /*cuts the content outside the circle*/
   overflow: hidden;
-  z-index: 3;
   /*used to hide the first lens drawing at top:0 left:0 that it remains visible*/
   opacity: 0;
   pointer-events: none;
