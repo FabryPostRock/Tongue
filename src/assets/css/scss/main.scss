@@ -234,6 +234,7 @@ button:hover {
   // Quando una news viene espansa, gli altri elementi possono risalire a riempire gli spazi vuoti sopra.
   // Con row e col era più complicato da gestire.
   grid-auto-flow: dense;
+  // align-items: stretch -> è ridondante perché in grid è già il comportamento di default
 }
 
 #news-container > .news-item {
