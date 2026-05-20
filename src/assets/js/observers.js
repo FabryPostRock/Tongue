@@ -82,14 +82,14 @@ export let newsUrlInnerHTML = (news) => `
                     </div>
                     <div class="d-flex align-items-center gap-2">
                     <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">thumb_up</span>
-                    <span class="secondary-color lh-1">${news.score}</span>
+                    <span class="secondary-color lh-1">${news?.score}</span>
                     </div>
                 </div>
                 <div class="mt-auto mb-3 d-flex justify-content-between">
                     <a href="${news.url}" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Leggi</a>
                     <div class="d-flex align-items-end gap-2">
                       <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">calendar_month</span>
-                      <small class="text-muted mb-0 lh-1">${news.time}</small>
+                      <small class="text-muted mb-0 lh-1">${news?.time}</small>
                     </div>
                 </div>
               </div>
@@ -102,7 +102,7 @@ export let newsTextInnerHTML = (news) => `
           <div class="card flex-fill w-min-16-rem"> 
             <div class="card-body d-flex flex-column">
               <h5 class="card-title secondary-color">${news.title}</h5>
-              <div class="news-extra">${news.text}</div>
+              <div class="news-extra mb-auto">${news?.text}</div>
               <div class="mb-3 d-flex justify-content-between">
                   <div class="d-flex align-items-center gap-2">
                     <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">article_person</span>
@@ -110,13 +110,13 @@ export let newsTextInnerHTML = (news) => `
                   </div>
                   <div class="d-flex align-items-center gap-2">
                     <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">thumb_up</span>
-                    <span class="secondary-color lh-1">${news.score}</span>
+                    <span class="secondary-color lh-1">${news?.score}</span>
                   </div>
               </div>
               <div class="mt-auto mb-3 d-flex justify-content-between">
                   <div class="d-flex align-items-end gap-2">
                     <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">calendar_month</span>
-                    <small class="text-muted mb-0 lh-1">${news.time}</small>
+                    <small class="text-muted mb-0 lh-1">${news?.time}</small>
                   </div>
               </div>
             </div>
@@ -149,6 +149,10 @@ export function createNewsDomEl(news) {
         newsItems.forEach((el) => el.classList.remove('is-expanded'));
         divCard.classList.add('is-expanded');
       });
+    } else {
+      divCard.className = 'news-item';
+      news.text = 'No more details present for this article';
+      divCard.innerHTML = newsTextInnerHTML(news).replace(`news-extra`, '');
     }
     return divCard;
   } else {

@@ -2,7 +2,7 @@ import { HackerNewsAPI } from './hacker_news_api.js';
 import { News } from './observable.js';
 import { renderNewsChange, parentNode, elements, intObs } from './observers.js';
 import { safeStorage } from './utilities.js';
-import { animate } from './animations.js';
+//import { animate } from './animations.js';
 
 const STORAGE_NEWS = {
   kItemsIds: 'news:itemsIds',
@@ -97,6 +97,21 @@ try {
 
   // When page is loaded
   document.addEventListener('DOMContentLoaded', async () => {
+    // Dynamic loading is used because inside the modules there are variables read from DOM tree
+    const { renderNewsChange, parentNode, elements, intObs } = await import('./observers.js');
+    const { animate } = await import('./animations.js');
+
+    //btns to load news or reset the news counter
+    const btnLoadNews = document.querySelector('.load-more-btn');
+    const btnResetAndLoadNews = document.querySelector('.reset-news-count-and-load-btn');
+    btnLoadNews.addEventListener('click', async () => await getNewsBlockWrapper(btnLoadNews));
+
+    btnResetAndLoadNews.addEventListener('click', () => {
+      /*this action reloads the page and as consequence it updates the list of news*/
+      safeStorage.setTo(sessionStorage, STORAGE_NEWS.kIdxStartId, 0);
+      location.reload();
+    });
+
     if (elements && intObs && Object.getPrototypeOf(intObs) === IntersectionObserver.prototype) {
       elements.forEach((el) => {
         intObs.observe(el);
@@ -110,21 +125,10 @@ try {
     safeStorage.setTo(sessionStorage, STORAGE_NEWS.kItemsIds, itemsIds);
     //Loads n new news cards
     await getNewsBlock(n, STORAGE_NEWS);
+
+    // Lens that bounces around
+    animate();
   });
-
-  //btns to load news or reset the news counter
-  const btnLoadNews = document.querySelector('.load-more-btn');
-  const btnResetAndLoadNews = document.querySelector('.reset-news-count-and-load-btn');
-  btnLoadNews.addEventListener('click', async () => await getNewsBlockWrapper(btnLoadNews));
-
-  btnResetAndLoadNews.addEventListener('click', () => {
-    /*this action reloads the page and as consequence it updates the list of news*/
-    safeStorage.setTo(sessionStorage, STORAGE_NEWS.kIdxStartId, 0);
-    location.reload();
-  });
-
-  // Lens that bounces around
-  animate();
 } catch (err) {
   console.error(err);
 }
