@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import * as ss from './utilities.js';
-import { getNewsBlock } from './main.js';
+import { getNewsBlock, deleteSelNews } from './main.js';
 import { News } from './observable.js';
 import { HackerNewsAPI } from './hacker_news_api.js';
 // @vitest-environment jsdom
@@ -187,3 +187,21 @@ describe('getNewsBlock', () => {
     expect(spySetTo).toHaveBeenCalledWith(sessionStorage, kEnNewsUpdates, expectedNewEnNewsUpdates);
   });
 });
+
+/*describe('deleteSelNews', () => {
+  beforeEach(() => {
+    n = new News();
+    vi.unstubAllGlobals();
+    const { kItemsIds, kIdxStartId, kEnNewsUpdates } = STORAGE_NEWS;
+  });
+
+  it('observer par KO ', async () => {
+
+  });
+  it('observer par KO ', async () => {
+    
+  });
+  it('observer par KO ', async () => {
+    
+  });
+});*/

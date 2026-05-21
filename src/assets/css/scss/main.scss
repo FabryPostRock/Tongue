@@ -100,7 +100,6 @@ footer a:focus,
 }
 
 .card {
-  //--bs-card-bg: linear-gradient(45deg, #ffffff 80%, var(--bs-primary) 100%);
   background: var(--bs-card-bg);
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   box-shadow: 0.2rem 0.2rem 0.3rem rgba(var(--bs-secondary-rgb), 0.6);

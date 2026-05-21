@@ -1,8 +1,7 @@
 import { HackerNewsAPI } from './hacker_news_api.js';
 import { News } from './observable.js';
-import { renderNewsChange, parentNode, elements, intObs } from './observers.js';
+import { renderNewsChange } from './observers.js';
 import { safeStorage } from './utilities.js';
-//import { animate } from './animations.js';
 
 const STORAGE_NEWS = {
   kItemsIds: 'news:itemsIds',
@@ -12,6 +11,8 @@ const STORAGE_NEWS = {
 };
 
 const n = new News();
+
+const PAR_ERROR = 'One or more function parameters are not correct or missing!';
 
 export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates }) {
   /* This function manages multiple news requests and the next news block to show*/
@@ -28,7 +29,7 @@ export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates
     typeof kEnNewsUpdates !== 'string' ||
     Object.getPrototypeOf(obs) !== News.prototype
   ) {
-    throw new Error('One or more function parameters are not correct or missing!');
+    throw new Error(PAR_ERROR);
   }
   const itemsIds = safeStorage.getFrom(sessionStorage, kItemsIds);
   enNewsUpdates = safeStorage.getFrom(sessionStorage, kEnNewsUpdates);
@@ -75,8 +76,7 @@ export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates
 
 async function getNewsBlockWrapper(el, obs) {
   // This condition avoids a new click event while an event is already triggered
-  if (el.disabled) return;
-
+  if (el.disabled || !obs || Object.getPrototypeOf(obs) !== News.prototype) throw new Error(PAR_ERROR);
   el.disabled = true;
 
   try {
@@ -90,9 +90,10 @@ async function getNewsBlockWrapper(el, obs) {
   }
 }
 
-let dataNewsIds = null;
-function deleteSelNews(obs) {
+export function deleteSelNews(obs) {
   /* The function configures every new 'news' element for deletion*/
+  if (!obs || Object.getPrototypeOf(obs) !== News.prototype) throw new Error(PAR_ERROR);
+  let dataNewsIds = null;
   dataNewsIds = document.querySelectorAll('div[data-news-id]');
   if (!dataNewsIds) return;
   dataNewsIds.forEach((el) => {
