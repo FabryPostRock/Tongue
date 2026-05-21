@@ -74,12 +74,12 @@ export let newsUrlInnerHTML = (news) => `
           <article>
             <div class="card flex-fill w-min-16-rem">             
               <div class="card-body d-flex flex-column">
-                <div class="d-flex flex-row justify-content-between">
+                <div class="d-flex flex-row justify-content-between align-items-start">
                   <h5 class="card-title secondary-color">${news.title}</h5>
                   <a  
-                          class="btn white p-0 m-0  a-icon-hover"
+                          class="btn white p-0 m-2  a-icon-hover  rounded-5"
                           aria-label="Elimina dalla vista la news corrente">
-                    <span class="material-symbols-outlined g-icon-2em g-icon-secondary-color rounded-5 lh-2">close</span>
+                    <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color rounded-5 lh-1">delete</span>
                   </a>
                 </div>
                 <div class="mb-3 d-flex justify-content-between">
@@ -93,6 +93,7 @@ export let newsUrlInnerHTML = (news) => `
                     </div>
                 </div>
                 <div class="mt-auto mb-3 d-flex justify-content-between">
+                    <!--rel="noopener noreferrer" serve a evitare problemi di sicurezza e a non comunicare alla pagina esterna da dove è partito il click.-->
                     <a href="${news.url}" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Leggi</a>
                     <div class="d-flex align-items-end gap-2">
                       <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color lh-1">calendar_month</span>
@@ -108,12 +109,13 @@ export let newsTextInnerHTML = (news) => `
         <article>
           <div class="card flex-fill w-min-16-rem"> 
             <div class="card-body d-flex flex-column">
-                <div class="d-flex flex-row justify-content-between">
+            <!--align-items-start evita di stretchare l'<a> soprattutto dovuto al flex, d-inline non ha effetto-->
+                <div class="d-flex flex-row justify-content-between align-items-start">
                   <h5 class="card-title secondary-color">${news.title}</h5>
                   <a  
-                          class="btn white p-0 m-0  a-icon-hover"
+                          class="btn white p-0 m-2  a-icon-hover  rounded-5"
                           aria-label="Elimina dalla vista la news corrente">
-                    <span class="material-symbols-outlined g-icon-2em g-icon-secondary-color rounded-5 lh-2">close</span>
+                    <span class="material-symbols-outlined g-icon-1em g-icon-secondary-color rounded-5 lh-1">delete</span>
                   </a>
                 </div>
               <div class="news-extra mb-auto">${news?.text}</div>
