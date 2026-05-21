@@ -73,7 +73,7 @@ export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates
   }
 }
 
-async function getNewsBlockWrapper(el) {
+async function getNewsBlockWrapper(el, obs) {
   // This condition avoids a new click event while an event is already triggered
   if (el.disabled) return;
 
@@ -81,12 +81,28 @@ async function getNewsBlockWrapper(el) {
 
   try {
     await getNewsBlock(n, STORAGE_NEWS);
+    deleteSelNews(obs);
   } catch (err) {
     console.error(err);
     //finally is always executed and is necessary in case of  getNewsBlock exception to re-enable the btn
   } finally {
     el.disabled = false;
   }
+}
+
+let dataNewsIds = null;
+function deleteSelNews(obs) {
+  /* The function configures every new 'news' element for deletion*/
+  dataNewsIds = document.querySelectorAll('div[data-news-id]');
+  if (!dataNewsIds) return;
+  dataNewsIds.forEach((el) => {
+    if (!el?.dataset?.newsId) throw new Error('No id parameter for the selected news!');
+    try {
+      el.addEventListener('click', async () => await obs.removeNews(parseInt(el.dataset.newsId)));
+    } catch (err) {
+      console.error('In function deleteSelNews : ', err);
+    }
+  });
 }
 
 /*-------------------------MAIN ------------------------------*/
@@ -104,7 +120,7 @@ try {
     //btns to load news or reset the news counter
     const btnLoadNews = document.querySelector('.load-more-btn');
     const btnResetAndLoadNews = document.querySelector('.reset-news-count-and-load-btn');
-    btnLoadNews.addEventListener('click', async () => await getNewsBlockWrapper(btnLoadNews));
+    btnLoadNews.addEventListener('click', async () => await getNewsBlockWrapper(btnLoadNews, n));
 
     btnResetAndLoadNews.addEventListener('click', () => {
       /*this action reloads the page and as consequence it updates the list of news*/
@@ -125,7 +141,7 @@ try {
     safeStorage.setTo(sessionStorage, STORAGE_NEWS.kItemsIds, itemsIds);
     //Loads n new news cards
     await getNewsBlock(n, STORAGE_NEWS);
-
+    deleteSelNews(n);
     // Lens that bounces around
     animate();
   });
