@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import * as ss from './utilities.js';
-import { getNewsBlock, deleteSelNews } from './main.js';
+import { getNewsBlock, deleteSelNews, PAR_ERROR } from './main.js';
 import { News } from './observable.js';
 import { renderNewsChange, parentNode, elements, intObs } from './observers.js';
 import { HackerNewsAPI } from './hacker_news_api.js';
@@ -23,29 +23,50 @@ describe('getNewsBlock', () => {
 
   it('Check par KO : if one or more parameters are not correct an error is raised', async () => {
     await expect(
-      getNewsBlock(n, {
-        kItemsIds: null,
-        kIdxStartId: STORAGE_NEWS.kIdxStartId,
-        kEnNewsUpdates: STORAGE_NEWS.kEnNewsUpdates,
-      }),
-    ).rejects.toThrow();
+      getNewsBlock(
+        n,
+        {
+          kItemsIds: null,
+          kIdxStartId: STORAGE_NEWS.kIdxStartId,
+          kEnNewsUpdates: STORAGE_NEWS.kEnNewsUpdates,
+        },
+        renderNewsChange,
+      ),
+    ).rejects.toThrowError(PAR_ERROR);
     await expect(
-      getNewsBlock(n, {
-        kItemsIds: STORAGE_NEWS.kItemsIds,
-        kIdxStartId: null,
-        kEnNewsUpdates: STORAGE_NEWS.kEnNewsUpdates,
-      }),
-    ).rejects.toThrow();
+      getNewsBlock(
+        n,
+        {
+          kItemsIds: STORAGE_NEWS.kItemsIds,
+          kIdxStartId: null,
+          kEnNewsUpdates: STORAGE_NEWS.kEnNewsUpdates,
+        },
+        renderNewsChange,
+      ),
+    ).rejects.toThrowError(PAR_ERROR);
     await expect(
-      getNewsBlock(n, {
-        kItemsIds: STORAGE_NEWS.kItemsIds,
-        kIdxStartId: STORAGE_NEWS.kIdxStartId,
-        kEnNewsUpdates: null,
-      }),
-    ).rejects.toThrow();
-    await expect(getNewsBlock(Object, STORAGE_NEWS)).rejects.toThrowError(
-      'One or more function parameters are not correct or missing!',
-    );
+      getNewsBlock(
+        n,
+        {
+          kItemsIds: STORAGE_NEWS.kItemsIds,
+          kIdxStartId: STORAGE_NEWS.kIdxStartId,
+          kEnNewsUpdates: null,
+        },
+        renderNewsChange,
+      ),
+    ).rejects.toThrowError(PAR_ERROR);
+    await expect(
+      getNewsBlock(
+        n,
+        {
+          kItemsIds: STORAGE_NEWS.kItemsIds,
+          kIdxStartId: STORAGE_NEWS.kIdxStartId,
+          kEnNewsUpdates: STORAGE_NEWS.kEnNewsUpdates,
+        },
+        'wrong function passed',
+      ),
+    ).rejects.toThrowError(PAR_ERROR);
+    await expect(getNewsBlock(Object, STORAGE_NEWS, renderNewsChange)).rejects.toThrowError(PAR_ERROR);
   });
 
   it('kItemsIds.data type KO : Check kItemsIds.data not an array', async () => {

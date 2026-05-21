@@ -11,7 +11,7 @@ const STORAGE_NEWS = {
 
 const n = new News();
 
-const PAR_ERROR = 'One or more function parameters are not correct or missing!';
+export const PAR_ERROR = 'One or more function parameters are not correct or missing!';
 
 export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates }, obsFun) {
   /* This function manages multiple news requests and the next news block to show*/
