@@ -1,6 +1,5 @@
 import { HackerNewsAPI } from './hacker_news_api.js';
 import { News } from './observable.js';
-import { renderNewsChange } from './observers.js';
 import { safeStorage } from './utilities.js';
 
 const STORAGE_NEWS = {
@@ -14,7 +13,7 @@ const n = new News();
 
 const PAR_ERROR = 'One or more function parameters are not correct or missing!';
 
-export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates }) {
+export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates }, obsFun) {
   /* This function manages multiple news requests and the next news block to show*/
   const NUM_NEWS_BLOCK = 10;
   let setTid = null;
@@ -27,7 +26,8 @@ export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates
     typeof kItemsIds !== 'string' ||
     typeof kIdxStartId !== 'string' ||
     typeof kEnNewsUpdates !== 'string' ||
-    Object.getPrototypeOf(obs) !== News.prototype
+    Object.getPrototypeOf(obs) !== News.prototype ||
+    typeof obsFun !== 'function'
   ) {
     throw new Error(PAR_ERROR);
   }
@@ -52,7 +52,7 @@ export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates
     } else {
       idxEndId = idxStartId + NUM_NEWS_BLOCK;
     }
-    obs.subscribe(renderNewsChange);
+    obs.subscribe(obsFun);
     if (!enNewsUpdates) {
       for (let i = idxStartId; i < idxEndId; i++) {
         console.log(`INDICI ${idxStartId} - ${idxEndId} - ${i}`);
@@ -74,13 +74,14 @@ export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates
   }
 }
 
-async function getNewsBlockWrapper(el, obs) {
+async function getNewsBlockWrapper(el, obs, obsFun) {
   // This condition avoids a new click event while an event is already triggered
-  if (el.disabled || !obs || Object.getPrototypeOf(obs) !== News.prototype) throw new Error(PAR_ERROR);
+  if (el.disabled || !obs || Object.getPrototypeOf(obs) !== News.prototype || typeof obsFun !== 'function')
+    throw new Error(PAR_ERROR);
   el.disabled = true;
 
   try {
-    await getNewsBlock(n, STORAGE_NEWS);
+    await getNewsBlock(n, STORAGE_NEWS, obsFun);
     deleteSelNews(obs);
   } catch (err) {
     console.error(err);
@@ -121,7 +122,7 @@ try {
     //btns to load news or reset the news counter
     const btnLoadNews = document.querySelector('.load-more-btn');
     const btnResetAndLoadNews = document.querySelector('.reset-news-count-and-load-btn');
-    btnLoadNews.addEventListener('click', async () => await getNewsBlockWrapper(btnLoadNews, n));
+    btnLoadNews.addEventListener('click', async () => await getNewsBlockWrapper(btnLoadNews, n, renderNewsChange));
 
     btnResetAndLoadNews.addEventListener('click', () => {
       /*this action reloads the page and as consequence it updates the list of news*/
@@ -141,7 +142,7 @@ try {
     // Oggetto da salvare in storage come stringa
     safeStorage.setTo(sessionStorage, STORAGE_NEWS.kItemsIds, itemsIds);
     //Loads n new news cards
-    await getNewsBlock(n, STORAGE_NEWS);
+    await getNewsBlock(n, STORAGE_NEWS, renderNewsChange);
     deleteSelNews(n);
     // Lens that bounces around
     animate();

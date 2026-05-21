@@ -2,6 +2,7 @@ import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import * as ss from './utilities.js';
 import { getNewsBlock, deleteSelNews } from './main.js';
 import { News } from './observable.js';
+import { renderNewsChange, parentNode, elements, intObs } from './observers.js';
 import { HackerNewsAPI } from './hacker_news_api.js';
 // @vitest-environment jsdom
 
@@ -67,7 +68,7 @@ describe('getNewsBlock', () => {
       return null;
     });
 
-    await expect(getNewsBlock(n, STORAGE_NEWS)).rejects.toThrowError('Could not retrive news Ids!');
+    await expect(getNewsBlock(n, STORAGE_NEWS, renderNewsChange)).rejects.toThrowError('Could not retrive news Ids!');
   });
 
   it('enNewsUpdates OK : no errors if false or true', async () => {
@@ -103,7 +104,7 @@ describe('getNewsBlock', () => {
       error: null,
     });
 
-    await expect(getNewsBlock(n, STORAGE_NEWS)).resolves.not.toThrow();
+    await expect(getNewsBlock(n, STORAGE_NEWS, renderNewsChange)).resolves.not.toThrow();
   });
 
   it('idxStartId OK : verify next start index ', async () => {
@@ -141,7 +142,7 @@ describe('getNewsBlock', () => {
       error: null,
     });
 
-    await getNewsBlock(n, STORAGE_NEWS);
+    await getNewsBlock(n, STORAGE_NEWS, renderNewsChange);
     expect(spySetTo).toHaveBeenCalledWith(sessionStorage, kIdxStartId, expectedNewIdxEndId);
   });
 
@@ -181,7 +182,7 @@ describe('getNewsBlock', () => {
       error: null,
     });
 
-    await getNewsBlock(n, STORAGE_NEWS);
+    await getNewsBlock(n, STORAGE_NEWS, renderNewsChange);
 
     expect(spySetTo).toHaveBeenCalledWith(sessionStorage, kIdxStartId, expectedNewIdxEndId);
     expect(spySetTo).toHaveBeenCalledWith(sessionStorage, kEnNewsUpdates, expectedNewEnNewsUpdates);
