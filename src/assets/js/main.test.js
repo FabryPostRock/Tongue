@@ -434,7 +434,8 @@ describe('deleteSelNews', () => {
 
     const { renderNewsChange, parentNode, elements, intObs } = await import('./observers.js');
     let idx = 0;
-    // Mocko la restituzione di n elementi creati a mano. id++ itera sugli elementi dell'array
+    // Mocko la restituzione di n elementi creati a mano. id++ itera sugli elementi dell'array grazie al for che richiama
+    // ciclicamente 'getBlockNewsDetails'
     const getBlockSpy = vi
       .spyOn(HackerNewsAPI, 'getBlockNewsDetails')
       .mockImplementation(async () => MOCKED_NEWS[idx++]);
