@@ -12,6 +12,9 @@ const STORAGE_NEWS = {
 const n = new News();
 
 export const PAR_ERROR = 'One or more function parameters are not correct or missing!';
+export const NO_ID_SEL_NEWS_ERROR = 'No id parameter for the selected news!';
+export const SLIDE_IN_ERROR = 'Page is loaded but something is wrong with elements sliding in';
+export const NEWS_ITEMS_QUERY_ERROR = 'No News items retrieved';
 
 export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates }, obsFun) {
   /* This function manages multiple news requests and the next news block to show*/
@@ -96,9 +99,10 @@ export function deleteSelNews(obs) {
   if (!obs || Object.getPrototypeOf(obs) !== News.prototype) throw new Error(PAR_ERROR);
   let dataNewsIds = null;
   dataNewsIds = document.querySelectorAll('div[data-news-id]');
-  if (!dataNewsIds) return;
+  // querySelectorAll restituisce sempre qualcosa di non null quindi bisogna controllare la lunghezza
+  if (dataNewsIds.length === 0) throw new Error(NEWS_ITEMS_QUERY_ERROR);
   dataNewsIds.forEach((el) => {
-    if (!el?.dataset?.newsId) throw new Error('No id parameter for the selected news!');
+    if (!el?.dataset?.newsId) throw new Error(NO_ID_SEL_NEWS_ERROR);
     try {
       el.addEventListener('click', async () => await obs.removeNews(parseInt(el.dataset.newsId)));
     } catch (err) {
@@ -135,7 +139,7 @@ try {
         intObs.observe(el);
       });
     } else {
-      throw new Error('Page is loaded but something is wrong with animations');
+      throw new Error(SLIDE_IN_ERROR);
     }
     safeStorage.setTo(sessionStorage, STORAGE_NEWS.kIdxStartId, 0);
     itemsIds = await HackerNewsAPI.getAllNewsIDs(HackerNewsAPI.itemsIds.URL);
