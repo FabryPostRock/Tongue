@@ -432,6 +432,20 @@ describe('deleteSelNews', () => {
       return null;
     });
 
+    async function waitForCondition(check, maxRetries = 10) {
+      /*listener è async perchè 'el.addEventListener('click', async () =>...', quindi attendiamo l'esecuzione della Promise.
+      await Promise.resolve() fa un ciclo di microtask queue ma non dà la certezza che la Promise del listener del click() sia risolta
+      in un ciclo di microtask. Per questo la funzione waitForCondition ne aspetta più di uno fino a quando una data condizione non si 
+      verifica.
+      */
+      for (let i = 0; i < maxRetries; i++) {
+        if (check()) return;
+        // fa un giro di microtask queue fino a quando la condizione non è raggiunta
+        await Promise.resolve();
+      }
+      throw new Error('Condition not reached');
+    }
+
     const { renderNewsChange, parentNode, elements, intObs } = await import('./observers.js');
     let idx = 0;
     // Mocko la restituzione di n elementi creati a mano. id++ itera sugli elementi dell'array grazie al for che richiama
@@ -444,16 +458,23 @@ describe('deleteSelNews', () => {
     expect(document.querySelector('#news-container')).not.toBeNull();
     expect(document.querySelectorAll('div[data-news-id]').length).toBeGreaterThan(0);
     deleteSelNews(n);
+    expect(document.querySelectorAll('div[data-news-id]').length).toBe(10);
     for (let idxClicked = 0; idxClicked < 10; idxClicked++) {
       // simula il click sulla card
       const card = document.querySelector(`[data-news-id="${MOCKED_NEWS[idxClicked].data.id}"]`);
       card.click();
-      // il listener è async perchè 'el.addEventListener('click', async () =>...', quindi attendiamo l'esecuzione della Promise.
-      await Promise.resolve();
+      // the callback is the 'check' parameter
+      await waitForCondition(() => {
+        return (
+          !n.items.has(MOCKED_NEWS[idxClicked].data.id) &&
+          document.querySelector(`[data-news-id="${MOCKED_NEWS[idxClicked].data.id}"]`) === null
+        );
+      });
       // la news è stata rimossa dalla mappa
       expect(n.items.has(MOCKED_NEWS[idxClicked].data.id)).toBe(false);
       // la card è stata davvero rimossa dal DOM
       expect(document.querySelector(`[data-news-id="${MOCKED_NEWS[idxClicked].data.id}"]`)).toBeNull();
     }
+    expect(document.querySelectorAll('div[data-news-id]').length).toBe(0);
   });
 });
