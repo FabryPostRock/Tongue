@@ -37,3 +37,10 @@ dist-ssr
 /_pycache__/
 **/node_modules/
 **/bootstrap/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
