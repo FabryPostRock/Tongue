@@ -486,6 +486,20 @@ Quando la CLI chiede di configurare GitHub:
 npm ci && npm run build
 ```
 
+Quando lanci:
+
+```bash
+npm ci
+```
+
+npm:
+
+- legge package-lock.json;
+- cancella completamente la cartella node_modules;
+- reinstalla tutte le dipendenze esattamente come sono bloccate nel lockfile;
+- non aggiorna package-lock.json;
+- fallisce se package.json e package-lock.json non sono coerenti.
+
 La CLI creerà automaticamente i workflow in:
 
 ```text
