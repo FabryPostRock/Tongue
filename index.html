@@ -12,13 +12,16 @@
       name="description"
       content="Tongue trasforma lo scrolling in informazione: contenuti rapidi, chiari e affidabili su attualità, sostenibilità, cultura ed eventi per una community consapevole."
     />
-    <!-- Favicons -->
-    <link rel="icon" type="image/png" href="public/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="public/favicon.svg" />
-    <link rel="shortcut icon" href="public/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="public/apple-touch-icon.png" />
+    <!-- Favicons 
+     In Vite, tutto ciò che metti in public/ viene servito alla root del sito, quindi :
+     public/web-app-manifest-192x192.png va referenziato come /web-app-manifest-192x192.png
+    -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Tongue" />
-    <link rel="manifest" href="public/site.webmanifest" />
+    <link rel="manifest" href="/site.webmanifest" />
     <!-- Meta tags SEO -->
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Tongue" />
@@ -35,7 +38,7 @@
       content="Contenuti giornalistici rapidi, chiari e coinvolgenti per portare attualità e ispirazione direttamente sul tuo smartphone."
     />
     <meta property="og:url" content="TO_BE_FILLED" />
-    <meta property="og:image" content="TO_BE_FILLED/public/web-app-manifest-192x192.png" />
+    <meta property="og:image" content="TO_BE_FILLED/web-app-manifest-192x192.png" />
     <meta property="og:image:alt" content="Tongue - informazione smart e accessibile" />
     <meta property="og:locale" content="it_IT" />
     <link
@@ -55,7 +58,7 @@
         "@type": "NewsMediaOrganization",
         "name": "Tongue",
         "url": "TO_BE_FILLED",
-        "logo": "TO_BE_FILLED/public/favicon.svg",
+        "logo": "/favicon.svg",
         "description": "Tongue è un media brand nato sui social per rendere l’informazione più immediata, accessibile e coinvolgente.",
         "slogan": "Informazione smart, chiara e accessibile",
         "sameAs": [
@@ -105,7 +108,7 @@
             <div class="row justify-content-center">
               <img
                 class="img-fluid shadow-gray-900 bg-white rounded slide-l-img"
-                src="public/web-app-manifest-192x192.png"
+                src="/web-app-manifest-192x192.png"
                 alt="Tongue"
                 height="auto"
               />
