@@ -27,7 +27,7 @@
     <meta name="author" content="Tongue" />
     <meta name="theme-color" content="#F4C400" />
     <!--Indica a Google che la versione preferita da indicizzare è https://www.tongue.it/-->
-    <link rel="canonical" href="TO_BE_FILLED" />
+    <link rel="canonical" href="https://tongue-8869e.web.app/" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -37,8 +37,8 @@
       property="og:description"
       content="Contenuti giornalistici rapidi, chiari e coinvolgenti per portare attualità e ispirazione direttamente sul tuo smartphone."
     />
-    <meta property="og:url" content="TO_BE_FILLED" />
-    <meta property="og:image" content="TO_BE_FILLED/web-app-manifest-192x192.png" />
+    <meta property="og:url" content="https://tongue-8869e.web.app/" />
+    <meta property="og:image" content="https://tongue-8869e.web.app/web-app-manifest-192x192.png" />
     <meta property="og:image:alt" content="Tongue - informazione smart e accessibile" />
     <meta property="og:locale" content="it_IT" />
     <link
@@ -57,7 +57,7 @@
         "@context": "https://schema.org",
         "@type": "NewsMediaOrganization",
         "name": "Tongue",
-        "url": "TO_BE_FILLED",
+        "url": "https://tongue-8869e.web.app/",
         "logo": "/favicon.svg",
         "description": "Tongue è un media brand nato sui social per rendere l’informazione più immediata, accessibile e coinvolgente.",
         "slogan": "Informazione smart, chiara e accessibile",
@@ -85,7 +85,7 @@
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "Tongue",
-        "url": "TO_BE_FILLED",
+        "url": "https://tongue-8869e.web.app/",
         "description": "Pillole di attualità, contenuti giornalistici, eventi e iniziative per una community attenta all’impatto sociale e ambientale.",
         "inLanguage": "it-IT",
         "publisher": {
@@ -372,5 +372,24 @@
       crossorigin="anonymous"
     ></script>
     <script type="module" src="src/assets/js/main.js"></script>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js';
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: 'AIzaSyAtpP4UXadQbj5sR36mpw90p18tIxY1aeo',
+        authDomain: 'tongue-8869e.firebaseapp.com',
+        projectId: 'tongue-8869e',
+        storageBucket: 'tongue-8869e.firebasestorage.app',
+        messagingSenderId: '1047537723240',
+        appId: '1:1047537723240:web:d6f836b223af8cd0cb58dd',
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+    </script>
   </body>
 </html>

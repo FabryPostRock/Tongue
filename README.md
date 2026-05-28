@@ -14,7 +14,7 @@ Landing page e news app sviluppata con **Vite**, JavaScript modulare, Bootstrap,
 
 Il progetto presenta il brand **Tongue**, una piattaforma di informazione smart, chiara e accessibile, e integra una sezione dinamica di news caricate dalla **Hacker News API**.
 
-<a href="https://INSERIRE_INDIRIZZO">View Demo</a>
+<a href="https://tongue-8869e.web.app/">View Demo</a>
 
 ---
 
