@@ -58,12 +58,12 @@ export async function getNewsBlock(obs, { kItemsIds, kIdxStartId, kEnNewsUpdates
     obs.subscribe(obsFun);
     if (!enNewsUpdates) {
       for (let i = idxStartId; i < idxEndId; i++) {
-        console.log(`INDICI ${idxStartId} - ${idxEndId} - ${i}`);
+        //console.log(`INDICI ${idxStartId} - ${idxEndId} - ${i}`);
         let newsData = null;
         newsData = await HackerNewsAPI.getBlockNewsDetails(itemsIds.data[i]);
 
         if (newsData?.data) obs.addNews(newsData.data);
-        console.log('newsData', newsData.data.id);
+        //console.log('newsData', newsData.data.id);
       }
     }
     if (idxEndId < itemsIds.data.length) {

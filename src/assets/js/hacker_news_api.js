@@ -53,7 +53,7 @@ export class HackerNewsAPI {
       try {
         HackerNewsAPI.itemDetails.response = await axios.get(HackerNewsAPI.URL_ID_DETAILS(id));
         itemDetailsActualAttempts += 1;
-        console.log('HackerNewsAPI.itemDetails.response', HackerNewsAPI.itemDetails.response);
+        //console.log('HackerNewsAPI.itemDetails.response', HackerNewsAPI.itemDetails.response);
         return {
           data: HackerNewsAPI.itemDetails.response?.data,
           ok: true,
