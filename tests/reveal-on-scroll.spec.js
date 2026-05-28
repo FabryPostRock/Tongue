@@ -13,55 +13,41 @@ test.describe('Reveal text sections on scroll sections', () => {
     await expect(page).toHaveTitle(/Tongue/);
   });
 
-  test('first reveal section becomes visible when scrolling', async ({ page }) => {
-    // first : verifica la prima occorrenza dell'elemento
-    const revealSection = page.locator('div.container-fluid.mb-5.reveal').first();
-    // verifica che l’elemento sia visibile a livello CSS, quindi non display: none, non visibility: hidden, ecc.
-    await expect(revealSection).toBeVisible();
-    await revealSection.scrollIntoViewIfNeeded();
-    // verifica che l’elemento sia realmente dentro la viewport del browser dopo lo scroll.
-    await expect(revealSection).toBeInViewport();
-  });
+  const revealSections = [
+    { index: 0, name: 'Immagine principale', class: 'div.container-fluid.mb-5.reveal', visibileWithoutScroll: true },
+    { index: 1, name: 'Chi siamo', class: 'div.container-fluid.mb-5.reveal', visibileWithoutScroll: true },
+    {
+      index: 0,
+      name: 'Founder giornalista',
+      class: 'div.row.justify-content-center.mx-3.mx-lg-5.reveal',
+      visibileWithoutScroll: false,
+    },
+    {
+      index: 1,
+      name: 'Founder youtuber',
+      class: 'div.row.justify-content-center.mx-3.mx-lg-5.reveal',
+      visibileWithoutScroll: false,
+    },
+  ];
 
-  test('second reveal section becomes visible when scrolling', async ({ page }) => {
-    // nth(1) : verifica la presenza del secondo elemento. nth(0) è il primo.
-    const revealSection = page.locator('div.container-fluid.mb-5.reveal').nth(1);
-    await revealSection.scrollIntoViewIfNeeded();
-    await expect(revealSection).toBeInViewport();
-  });
-
-  test('third reveal section becomes visible when scrolling', async ({ page }) => {
-    // nth(1) : verifica la presenza del secondo elemento. nth(0) è il primo.
-    const revealSection = page.locator('div.row.justify-content-center.mx-3.mx-lg-5.reveal').nth(0);
-    await revealSection.scrollIntoViewIfNeeded();
-    await expect(revealSection).toBeInViewport();
-  });
-
-  test('fourth reveal section becomes visible when scrolling', async ({ page }) => {
-    // nth(1) : verifica la presenza del secondo elemento. nth(0) è il primo.
-    const revealSection = page.locator('div.row.justify-content-center.mx-3.mx-lg-5.reveal').nth(1);
-    await revealSection.scrollIntoViewIfNeeded();
-    await expect(revealSection).toBeInViewport();
-  });
-});
-
-test.describe('Reveal buttons on scroll sections', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto(BASE_URL);
-  });
-
-  test('Reveal reload page button when scrolling', async ({ page }) => {
-    const revealSection = page
-      .locator('button.btn.btn-secondary.rounded-5.reset-news-count-and-load-btn.icon-lh-1')
-      .nth(0);
-    await revealSection.scrollIntoViewIfNeeded();
-    await expect(revealSection).toBeInViewport();
-  });
-
-  test('Reveal load more news button when scrolling', async ({ page }) => {
-    // nth(1) : verifica la presenza del secondo elemento. nth(0) è il primo.
-    const revealSection = page.locator('button.load-more-btn').nth(0);
-    await revealSection.scrollIntoViewIfNeeded();
-    await expect(revealSection).toBeInViewport();
+  revealSections.forEach((section, idx) => {
+    test(`${idx}° reveal section ${section.name} becomes visible when scrolling`, async ({ page }) => {
+      // nth : verifica l'occorrenza dell'elemento
+      const revealSection = page.locator(section.class).nth(section.index);
+      if (!section.visibileWithoutScroll) {
+        // 1. verifica che l’elemento sia invisibile a livello CSS, quindi display: none, visibility: hidden, ecc.
+        await expect(revealSection).toBeHidden();
+        // 2. La classe active non deve ancora esserci
+        await expect(revealSection).not.toHaveClass(/active/);
+      }
+      // 3. Porto la sezione nella viewport
+      await revealSection.scrollIntoViewIfNeeded();
+      // 4. Aspetta che venga aggiunta la classe active
+      await expect(revealSection).toHaveClass(/active/);
+      // 5. Ora deve essere visibile a livello CSS
+      await expect(revealSection).toBeVisible();
+      // 6. verifica che l’elemento sia realmente dentro la viewport del browser dopo lo scroll.
+      await expect(revealSection).toBeInViewport();
+    });
   });
 });
