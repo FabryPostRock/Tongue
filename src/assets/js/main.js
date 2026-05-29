@@ -98,13 +98,17 @@ export function deleteSelNews(obs) {
   /* The function configures every new 'news' element for deletion*/
   if (!obs || Object.getPrototypeOf(obs) !== News.prototype) throw new Error(PAR_ERROR);
   let dataNewsIds = null;
+  let deleteBtn = null;
   dataNewsIds = document.querySelectorAll('div[data-news-id]');
   // querySelectorAll restituisce sempre qualcosa di non null quindi bisogna controllare la lunghezza
   if (dataNewsIds.length === 0) throw new Error(NEWS_ITEMS_QUERY_ERROR);
   dataNewsIds.forEach((el) => {
     if (!el?.dataset?.newsId) throw new Error(NO_ID_SEL_NEWS_ERROR);
     try {
-      el.addEventListener('click', async () => await obs.removeNews(parseInt(el.dataset.newsId)));
+      deleteBtn = el.querySelector('a.a-icon-hover');
+      deleteBtn.addEventListener('click', async () => await obs.removeNews(parseInt(el.dataset.newsId)), {
+        once: true,
+      });
     } catch (err) {
       console.error('In function deleteSelNews : ', err);
     }

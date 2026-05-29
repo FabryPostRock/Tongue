@@ -459,10 +459,13 @@ describe('deleteSelNews', () => {
     expect(document.querySelectorAll('div[data-news-id]').length).toBeGreaterThan(0);
     deleteSelNews(n);
     expect(document.querySelectorAll('div[data-news-id]').length).toBe(10);
+    let card = null;
+    let deleteBtn = null;
     for (let idxClicked = 0; idxClicked < 10; idxClicked++) {
       // simula il click sulla card
-      const card = document.querySelector(`[data-news-id="${MOCKED_NEWS[idxClicked].data.id}"]`);
-      card.click();
+      card = document.querySelector(`[data-news-id="${MOCKED_NEWS[idxClicked].data.id}"]`);
+      deleteBtn = card.querySelector('a.a-icon-hover');
+      deleteBtn.click();
       // the callback is the 'check' parameter
       await waitForCondition(() => {
         return (
