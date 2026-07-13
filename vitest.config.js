@@ -2,14 +2,6 @@
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  server: {
-    port: 5173,
-    open: true,
-  },
-  build: {
-    outDir: 'dist', // cartella di output
-    sourcemap: true, // abilita la generazione delle source map
-  },
   /* ATTENZIONE ALL'ORDINE DEGLI IMPORT*/
   test: {
     // questa riga evita ad esempio che Vite faccia confusione con ad esempio questo :

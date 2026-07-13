@@ -1,0 +1,27 @@
+{
+  "folders": [
+    {
+      "name": "Tongue",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "terminal.integrated.profiles.linux": {
+      "WSL Node.js": {
+        "path": "/bin/bash",
+        "args": [
+          "--rcfile",
+          "${workspaceFolder:Tongue}/.vscode/wsl-node-bashrc",
+          "-i"
+        ],
+        "icon": "terminal-linux",
+        "overrideName": true
+      }
+    },
+    "terminal.integrated.defaultProfile.linux": "WSL Node.js",
+    "terminal.integrated.cwd": "${workspaceFolder:Tongue}",
+    "remote.autoForwardPorts": true,
+    "remote.restoreForwardedPorts": true,
+    "workbench.editor.labelFormat": "medium"
+  }
+}
